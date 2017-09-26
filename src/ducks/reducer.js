@@ -1,10 +1,13 @@
 const initialState = {
     tabList: [],
-    tabContent: ''
+    tabContent: '',
+    loading: false
 };
 
 //ACTION TYPES
 const UPDATE_TAB_LIST = 'UPDATE_TAB_LIST';
+const UPDATE_TAB_LIST_PENDING = 'UPDATE_TAB_LIST_PENDING';
+const UPDATE_TAB_LIST_FULFILLED = 'UPDATE_TAB_LIST_FULFILLED';
 const CLEAR_RESULTS = 'CLEAR_RESULTS';
 const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
 
@@ -35,6 +38,10 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case UPDATE_TAB_LIST:
             return Object.assign({}, state, { tabList: action.payload });
+        case UPDATE_TAB_LIST_PENDING:
+
+        case UPDATE_TAB_LIST_FULFILLED:
+            return
         case CLEAR_RESULTS:
             return Object.assign({}, state, { tabList: action.payload });
         case RENDER_TAB_CONTENT:

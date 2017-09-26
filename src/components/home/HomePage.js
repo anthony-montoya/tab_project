@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateTabList } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
-import SearchResults from '../search_results/SearchResults';
 
 class HomePage extends Component {
     constructor() {
@@ -42,7 +42,7 @@ class HomePage extends Component {
                     <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
                 </div>
 
-                <div className='hero_container'>
+                <div className='hero_container'> 
                     <h1>Learning music has never been easier</h1>
                     <h4>Search below by song or artist to begin learning your favorite music</h4>
                 </div>
@@ -62,14 +62,12 @@ class HomePage extends Component {
                         onChange={this.state.searchCategory === 'band' ? (event) => this.setState({ band: event.target.value })
                             : (event) => this.setState({ song: event.target.value })} />
 
-                    <button className='search_button' onClick={() => this.state.searchCategory === 'band' ?
-                        this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} >Search</button>
-        
-                </div>
 
-                {/* <div className='results_container'>
-                    <SearchResults />
-                </div> */}
+                    <button className='search_button' onClick={() => this.state.searchCategory === 'band' ?
+                        this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} > <Link to='/search-results'>Search</Link></button>
+                    {/* </Link> */}
+
+                </div>
 
             </div>
         )

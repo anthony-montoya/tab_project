@@ -9,7 +9,6 @@ class SearchResults extends Component {
 
     //THIS CURRENTLY HAS THE URL FOR THE TAB THE USER WANTS
     getContentText(tabObj) {
-        console.log('HERE IS THE TAB OBJ: ', tabObj)
         var tabUrl = tabObj.url;
         var tabDifficulty = tabObj.difficulty;
 
@@ -50,31 +49,39 @@ class SearchResults extends Component {
         })
 
         return (
-            <div className='search_results_container'>
-                <div className='search_results_header'>
+            <div className='page_container'>
+                <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/sani-trixie-sans" type="text/css" />
+
+                <div className='nav_container'>
+                    <a href='/' className='site_name'>TabSlam</a>
+                    <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
+                </div>
+                <div className='search_results_container'>
+                    <div className='search_results_header'>
+
+                        <section>
+                            <h1>Artist</h1>
+                        </section>
+
+                        <section>
+                            <h1>Song</h1>
+                        </section>
+
+                        <section>
+                            <h1>Tab Type</h1>
+                        </section>
+
+                        <section>
+                            <h1>Difficulty</h1>
+                        </section>
+
+                    </div>
 
                     <section>
-                        <h1>Artist</h1>
-                    </section>
-
-                    <section>
-                        <h1>Song</h1>
-                    </section>
-
-                    <section>
-                        <h1>Tab Type</h1>
-                    </section>
-
-                    <section>
-                        <h1>Difficulty</h1>
+                        {filteredTabList}
                     </section>
 
                 </div>
-
-                <section>
-                    {filteredTabList}
-                </section>
-                
             </div>
         )
     }
