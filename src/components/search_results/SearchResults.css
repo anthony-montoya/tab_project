@@ -1,0 +1,33 @@
+.search_results_container {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.search_results_header {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+}
+
+.search_results_header section {
+    width: 25%;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab_content {
+    display: flex;
+}
+
+.tab_content section {
+    width: 25%;
+    border-bottom: 1px solid black;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab_content section:nth-child(even){background-color: darkgray}
