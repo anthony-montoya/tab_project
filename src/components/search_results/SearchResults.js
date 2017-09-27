@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clearResults, renderTabResults } from '../../ducks/reducer';
+import { clearResults, renderTabResults, getTabId } from '../../ducks/reducer';
 import './SearchResults.css';
 
 class SearchResults extends Component {
@@ -14,8 +14,11 @@ class SearchResults extends Component {
 
         axios.get(`http://localhost:3020/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
             .then((response) => {
-                if (response.data.tab_content)
+                console.log('response ', response)
+                if (response.data.tab_content) {
                     this.props.renderTabResults(response.data.tab_content);
+                    this.props.getTabId(response.data.tab_id);
+                }
                 else
                     this.props.renderTabResults(response.data);
             })
@@ -23,6 +26,7 @@ class SearchResults extends Component {
 
     render() {
         const filteredTabList = this.props.tabList.map((tab, i) => {
+            console.log('THIS IS TAB ', tab)
             if (!tab.type.includes('pro') && !tab.type.includes('official')) {
                 return <div className='tab_content' key={i}>
 
@@ -47,14 +51,34 @@ class SearchResults extends Component {
                 </div>
             }
         })
-
+        console.log('USER ', this.props.user);
         return (
             <div className='page_container'>
-                <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/sani-trixie-sans" type="text/css" />
 
                 <div className='nav_container'>
-                    <a href='/' className='site_name'>TabSlam</a>
-                    <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
+                    {
+                        this.props.user === {}
+                            ?
+                            <a href='/' className='site_name'>TabSlam</a>
+                            :
+                            <a href='/#/logged_in_home' className='site_name'>TabSlam</a>
+                    }
+
+                    {
+                        this.props.user.hasOwnProperty('username')
+                            ?
+                            <a href={process.env.REACT_APP_LOGOUT} className='login'>Logout</a>
+                            :
+                            <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
+                    }
+
+                </div>
+                <div className='search_request'>
+                    <h1>Results for {
+
+                    }
+                    </h1>
+
                 </div>
                 <div className='search_results_container'>
                     <div className='search_results_header'>
@@ -89,8 +113,10 @@ class SearchResults extends Component {
 
 function mapStateToProps(state) {
     return {
-        tabList: state.tabList
+        tabList: state.tabList,
+        tabId: state.tabId,
+        user: state.user
     }
 }
 
-export default connect(mapStateToProps, { clearResults, renderTabResults })(SearchResults);
+export default connect(mapStateToProps, { clearResults, renderTabResults, getTabId })(SearchResults);

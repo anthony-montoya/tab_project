@@ -35,14 +35,12 @@ class HomePage extends Component {
     render() {
         return (
             <div className='page_container'>
-                <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/sani-trixie-sans" type="text/css" />
-
                 <div className='nav_container'>
                     <a href='/' className='site_name'>TabSlam</a>
                     <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
                 </div>
 
-                <div className='hero_container'> 
+                <div className='hero_container'>
                     <h1>Learning music has never been easier</h1>
                     <h4>Search below by song or artist to begin learning your favorite music</h4>
                 </div>
@@ -62,10 +60,8 @@ class HomePage extends Component {
                         onChange={this.state.searchCategory === 'band' ? (event) => this.setState({ band: event.target.value })
                             : (event) => this.setState({ song: event.target.value })} />
 
-
                     <button className='search_button' onClick={() => this.state.searchCategory === 'band' ?
                         this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} > <Link to='/search-results'>Search</Link></button>
-                    {/* </Link> */}
 
                 </div>
 

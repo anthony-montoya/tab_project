@@ -53,7 +53,7 @@ a:hover:before {
     font-family: 'SaniTrixieSansRegular'; 
     font-weight: normal; 
     font-style: normal;
-    font-size: 48px;
+    font-size: 12px;
     margin-left: 40px;
     color: white;
 }
@@ -62,7 +62,15 @@ a:hover:before {
     font-family: 'SaniTrixieSansRegular'; 
     font-weight: normal; 
     font-style: normal;
-    font-size: 48px;
+    font-size: 12px;
+    color: white;
+}
+
+.username_container {
+    font-family: 'SaniTrixieSansRegular'; 
+    font-weight: normal; 
+    font-style: normal;
+    font-size: 16px;
     margin-right: 40px;
     color: white;
 }

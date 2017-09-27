@@ -133,6 +133,14 @@ app.get('/api/tabContent', (req, res) => {
     })
 })
 
+app.post('/api/addFavoriteTab', (req, res) => {
+    const { tabId } = req.body;
+
+    app.get('db').add_favorites(req.user.user_id, tabId).then(response => {
+        res.status(200).send('Tab has been added');
+    })
+})
+
 //NODEMON PORT
 const PORT = 3020;
 app.listen(PORT, () => console.log('Reporting for duty on port: ' + PORT));

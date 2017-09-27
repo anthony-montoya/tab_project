@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateTabList } from '../../ducks/reducer';
+import { Link } from 'react-router-dom';
+import { updateTabList, getUserInfo, clearUserSession } from '../../ducks/reducer';
 import axios from 'axios';
 import './LoggedIn.css';
-import SearchResults from '../search_results/SearchResults';
 
 class HomePage extends Component {
     constructor() {
@@ -12,8 +12,7 @@ class HomePage extends Component {
         this.state = {
             band: '',
             song: '',
-            searchCategory: 'band',
-            username: ''
+            searchCategory: 'band'
         }
         this.getTabsByBand = this.getTabsByBand.bind(this);
         this.getTabsBySong = this.getTabsBySong.bind(this);
@@ -34,26 +33,24 @@ class HomePage extends Component {
     }
 
     componentWillMount() {
-        axios.get('/auth/me').then((response) => {
-            this.setState({
-                username: response.data.username
-            })
-        })
+        this.props.getUserInfo();
     }
 
     render() {
+        console.log(this.props.user)
         return (
             <div className='page_container'>
-                <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/sani-trixie-sans" type="text/css" />
 
                 <div className='nav_container'>
-                    <a href='/' className='site_name'>Find Tabs</a>
-                    <a href='/' className='site_name'>My Library</a>
-                    <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
-                    <div>
-                        <h3>Welcome home {this.state.username}</h3>
-                    </div>
+                    <a href='/#/logged_in_home' className='site_name'>TabSlam</a>
+                    
 
+                    <div className='username_container'>
+                        <h3>Welcome Home, {this.props.user.username}</h3>
+                        <a href='/'>My Library</a>
+                        <br />
+                        <a href={process.env.REACT_APP_LOGOUT} onClick={() => this.props.clearUserSession() }>Logout</a>
+                    </div>
 
                 </div>
 
@@ -73,12 +70,8 @@ class HomePage extends Component {
                             : (event) => this.setState({ song: event.target.value })} />
 
                     <button className='search_button' onClick={() => this.state.searchCategory === 'band' ?
-                        this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)}>Search</button>
+                        this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} > <Link to='/search-results'>Search</Link></button>
 
-                </div>
-
-                <div className='search_results_container'>
-                    <SearchResults />
                 </div>
 
             </div>
@@ -90,4 +83,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList })(HomePage);
+export default connect(mapStateToProps, { updateTabList, getUserInfo, clearUserSession })(HomePage);
