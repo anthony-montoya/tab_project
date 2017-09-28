@@ -124,7 +124,7 @@ app.get('/api/tabContent', (req, res) => {
             ugs.get(tabUrl, (error, tab) => {
                 app.get('db').store_tab(tab.type, tabUrl, tab.artist, tab.name,
                     tabDifficulty, tab.rating, tab.numberRates, tab.contentText).then(response => {
-                        res.status(200).send(tab.contentText);
+                        res.status(200).send(response);
                     })
             })
         } else {

@@ -4,14 +4,8 @@ import './Loading.css';
 class LoadingScreen extends Component {
     render() {
         return (
-            <div class="loading">
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-            </div>
+            <div className="signal"></div>
         )
-
     }
 }
 

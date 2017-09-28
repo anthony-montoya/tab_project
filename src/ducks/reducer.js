@@ -3,9 +3,10 @@ import axios from 'axios';
 const initialState = {
     tabList: [],
     tabContent: '',
-    loading: false,
+    isLoading: true,
     tabId: '',
-    user: {}
+    user: {},
+    tabObject: {}
 };
 
 //ACTION TYPES
@@ -18,6 +19,8 @@ const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
 const GET_TAB_ID = 'GET_TAB_ID';
 const GET_USER_INFO = 'GET_USER_INFO';
 const CLEAR_USER_SESSION = 'CLEAR_USER_SESSION';
+const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
+const GET_TAB_OBJECT = 'GET_TAB_OBJECT';
 
 //ACTION CREATOR 
 export function updateTabList(tabList) {
@@ -67,10 +70,25 @@ export function getUserInfo() {
     }
 }
 
+export function setLoadingStatus(status) {
+    return {
+        type: SET_LOADING_STATUS,
+        payload: status
+    }
+}
+
 export function clearUserSession() {
     return {
         type: CLEAR_USER_SESSION,
         payload: {}
+    }
+}
+
+export function getTabObject(tabObj) {
+    console.log('HERE IS THE TAB OBJECT ', tabObj);
+    return {
+        type: GET_TAB_OBJECT,
+        payload: tabObj
     }
 }
 
@@ -87,7 +105,7 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { loading: false, tabList: action.payload });
 
         case CLEAR_RESULTS:
-            return Object.assign({}, state, { tabList: action.payload });
+            return Object.assign({}, state, { tabList: action.payload, isLoading: true });
         
         case CLEAR_TAB_CONTENT:
             return Object.assign({}, state, { tabContent: action.payload });
@@ -103,6 +121,12 @@ export default function reducer(state = initialState, action) {
             
         case CLEAR_USER_SESSION:
             return Object.assign({}, state, { user: action.payload });
+            
+        case SET_LOADING_STATUS:
+            return Object.assign({}, state, { isLoading: action.payload });
+
+        case GET_TAB_OBJECT:
+            return Object.assign({}, state, { tabObject: action.payload });
             
         default:
             return state;

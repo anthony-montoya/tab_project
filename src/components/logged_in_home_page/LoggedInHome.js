@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, getUserInfo, clearUserSession } from '../../ducks/reducer';
+import { updateTabList, getUserInfo, clearUserSession, setLoadingStatus } from '../../ducks/reducer';
 import axios from 'axios';
 import './LoggedIn.css';
 
-class HomePage extends Component {
+class LoggedInHome extends Component {
     constructor() {
         super();
 
@@ -22,6 +22,7 @@ class HomePage extends Component {
         axios.get(`http://localhost:3020/api/bandSearch?bandName=${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
+                this.props.setLoadingStatus(false);
             })
     }
 
@@ -29,6 +30,7 @@ class HomePage extends Component {
         axios.get(`http://localhost:3020/api/songSearch?songName=${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
+                this.props.setLoadingStatus(false);
             })
     }
 
@@ -37,17 +39,15 @@ class HomePage extends Component {
     }
 
     render() {
-        console.log(this.props.user)
         return (
             <div className='page_container'>
 
                 <div className='nav_container'>
                     <a href='/#/logged_in_home' className='site_name'>TabSlam</a>
                     
-
                     <div className='username_container'>
                         <h3>Welcome Home, {this.props.user.username}</h3>
-                        <a href='/'>My Library</a>
+                        <a href='/#/profile/favorites'>My Library</a>
                         <br />
                         <a href={process.env.REACT_APP_LOGOUT} onClick={() => this.props.clearUserSession() }>Logout</a>
                     </div>
@@ -83,4 +83,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, getUserInfo, clearUserSession })(HomePage);
+export default connect(mapStateToProps, { updateTabList, getUserInfo, clearUserSession, setLoadingStatus })(LoggedInHome);
