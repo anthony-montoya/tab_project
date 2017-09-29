@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, setLoadingStatus } from '../../ducks/reducer';
+import { updateTabList, setLoadingStatus, updateUserSearch } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
 
@@ -23,6 +23,7 @@ class HomePage extends Component {
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
+                this.props.updateUserSearch(this.state.band)
             })
     }
 
@@ -31,6 +32,7 @@ class HomePage extends Component {
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
+                this.props.updateUserSearch(this.state.song);
             })
     }
 
@@ -76,4 +78,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, setLoadingStatus })(HomePage);
+export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch })(HomePage);

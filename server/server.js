@@ -128,6 +128,7 @@ app.get('/api/tabContent', (req, res) => {
                     })
             })
         } else {
+            console.log('DB TAB ', dbTab[0]);
             res.status(200).send(dbTab[0])
         }
     })

@@ -68,6 +68,34 @@
     width: 100%;
     min-height: 15vh;
     background: lightgreen;
+    display: flex;
+    flex-direction: row;
+}
+
+.tab_content_songInfo {
+    font-size: 16px;
+    width:25%;
+}
+
+.tab_content_songInfo h4 {
+    font-size: 14px;
+    margin-bottom: 30px;
+    
+}
+
+.tab_content_difficulty {
+    width:25%;
+
+}
+
+.tab_content_rating {
+    width:25%;
+
+}
+
+.tab_content_votes {
+    width:25%;
+
 }
 
 .search_results_container {

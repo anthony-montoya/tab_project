@@ -19,7 +19,7 @@ class SearchResults extends Component {
                     this.props.renderTabResults(response.data.tab_content);
                     this.props.getTabId(response.data.tab_id);
                 }
-                else
+                else 
                     this.props.renderTabResults(response.data[0].tab_content);
             })
     }
@@ -80,13 +80,21 @@ class SearchResults extends Component {
                         :
                         <div className='search_results_container'>
                             <div className='search_request'>
-                                <h1>Results for {
-
+                                <h1>Results for: {
+                                    this.props.userSearch
                                 }
                                 </h1>
-                                <Link to='/'>
-                                    <button onClick={() => this.props.clearResults()}>Back to Search</button>
-                                </Link>
+                                {
+                                    this.props.user.hasOwnProperty('username')
+                                        ?
+                                        <Link to='/logged_in_home/'>
+                                            <button onClick={() => this.props.clearResults()}>Back to Search</button>
+                                        </Link>
+                                        :
+                                        <Link to='/'>
+                                            <button onClick={() => this.props.clearResults()}>Back to Search</button>
+                                        </Link>
+                                }
 
                             </div>
                             <section>
@@ -107,8 +115,7 @@ class SearchResults extends Component {
                                     <section>
                                         <h1>Difficulty</h1>
                                     </section>
-
-
+                                    
                                 </div>
 
                                 <section>
@@ -130,7 +137,8 @@ function mapStateToProps(state) {
         tabId: state.tabId,
         user: state.user,
         isLoading: state.isLoading,
-        tabObject: state.tabObject
+        tabObject: state.tabObject,
+        userSearch: state.userSearch
     }
 }
 

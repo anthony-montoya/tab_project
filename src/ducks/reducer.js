@@ -6,7 +6,8 @@ const initialState = {
     isLoading: true,
     tabId: '',
     user: {},
-    tabObject: {}
+    tabObject: {},
+    userSearch: ''
 };
 
 //ACTION TYPES
@@ -21,6 +22,7 @@ const GET_USER_INFO = 'GET_USER_INFO';
 const CLEAR_USER_SESSION = 'CLEAR_USER_SESSION';
 const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 const GET_TAB_OBJECT = 'GET_TAB_OBJECT';
+const UPDATE_USER_SEARCH = 'UPDATE_USER_SEARCH';
 
 //ACTION CREATOR 
 export function updateTabList(tabList) {
@@ -85,11 +87,18 @@ export function clearUserSession() {
 }
 
 export function getTabObject(tabObj) {
-    console.log('HERE IS THE TAB OBJECT ', tabObj);
     return {
         type: GET_TAB_OBJECT,
         payload: tabObj
     }
+}
+
+export function updateUserSearch(search) {
+    return {
+        type: UPDATE_USER_SEARCH,
+        payload: search
+    }
+
 }
 
 //REDUCER FUNCTION
@@ -108,7 +117,7 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { tabList: action.payload, isLoading: true });
         
         case CLEAR_TAB_CONTENT:
-            return Object.assign({}, state, { tabContent: action.payload });
+            return Object.assign({}, state, { tabContent: action.payload, tabObject: {} });
 
         case RENDER_TAB_CONTENT:
             return Object.assign({}, state, { tabContent: action.payload });
@@ -127,6 +136,9 @@ export default function reducer(state = initialState, action) {
 
         case GET_TAB_OBJECT:
             return Object.assign({}, state, { tabObject: action.payload });
+
+        case UPDATE_USER_SEARCH:
+            return Object.assign({}, state, { userSearch: action.payload });
             
         default:
             return state;

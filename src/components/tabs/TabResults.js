@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { clearTabContent } from '../../ducks/reducer';
+import { clearTabContent, getTabObject } from '../../ducks/reducer';
 import './TabResults.css';
 
 class TabResults extends Component {
@@ -17,10 +17,8 @@ class TabResults extends Component {
     }
 
     render() {
-        console.log("THIS IS IMPORTANT", this.props.tabContent);
         return (
             <div className='page_container'>
-                <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/sani-trixie-sans" type="text/css" />
 
                 <div className='nav_container'>
                     {
@@ -43,13 +41,30 @@ class TabResults extends Component {
                 <div className='search_results_container'>
                     <pre>
                         <div className='tab_information_header'>
+                            <div className='tab_content_songInfo'>
+                                <h3>{this.props.tabObject.song_name + ' Tab'}</h3>
+                                <br />
+                                <h4>{'By ' + this.props.tabObject.artist}</h4>
+                            </div>
+
+                            <div className='tab_content_difficulty'>
+                                <h3>{'Tab Difficulty ' + this.props.tabObject.difficulty}</h3>
+                            </div>
+
+                            <div className='tab_content_rating'>
+                                <h3>{'Tab Rating ' + this.props.tabObject.rating}</h3>
+                            </div>
+
+                            <div className='tab_content_votes'>
+                                <h3>{'Tab Votes ' + this.props.tabObject.tab_rates}</h3>
+                            </div>
                             <button onClick={() => this.add(this.props.tabId)}>Add tab to Favorites</button>
                             <br />
                             <Link to='/search-results'>
                                 <button onClick={() => this.props.clearTabContent()}>Back</button>
                             </Link>
                         </div>
-                         {this.props.tabContent} 
+                        {this.props.tabContent}
                     </pre>
                 </div>
             </div>
@@ -63,7 +78,8 @@ function mapStateToProps(state) {
         tabId: state.tabId,
         tabList: state.tabList,
         user: state.user,
+        tabObject: state.tabObject
     }
 }
 
-export default connect(mapStateToProps, { clearTabContent })(TabResults);
+export default connect(mapStateToProps, { clearTabContent, getTabObject })(TabResults);

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clearResults, renderTabResults, getTabId, getTabObject } from '../../ducks/reducer';
 import './LoggedInFavorites.css';
-
 
 class LoggedInFavorites extends Component {
 
