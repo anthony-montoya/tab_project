@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { clearResults, renderTabResults, getTabId, getTabObject } from '../../ducks/reducer';
 import './SearchResults.css';
 import LoadingScreen from '../loading/LoadingScreen';
+import backArrowLogo from '../../backArrow.png';
 
 class SearchResults extends Component {
     //THIS CURRENTLY HAS THE URL FOR THE TAB THE USER WANTS
@@ -19,13 +20,13 @@ class SearchResults extends Component {
                     this.props.renderTabResults(response.data.tab_content);
                     this.props.getTabId(response.data.tab_id);
                 }
-                else 
+                else
                     this.props.renderTabResults(response.data[0].tab_content);
             })
     }
 
     render() {
-        const filteredTabList = this.props.tabList.map((tab, i) => {
+        let filteredTabList = this.props.tabList.map((tab, i) => {
             if (!tab.type.includes('pro') && !tab.type.includes('official')) {
                 return <div className='tab_content' key={i}>
 
@@ -52,23 +53,23 @@ class SearchResults extends Component {
         })
 
         return (
-            <div className='page_container'>
+            <div className='search_page_container'>
 
-                <div className='nav_container'>
+                <div className='search_nav_container'>
                     {
                         this.props.user.hasOwnProperty('username')
                             ?
-                            <a href='/#/logged_in_home' className='site_name'>TabSlam</a>
+                            <a href='/#/logged_in_home'>TabSlam</a>
                             :
-                            <a href='/' className='site_name'>TabSlam</a>
+                            <a href='/'>TabSlam</a>
                     }
 
                     {
                         this.props.user.hasOwnProperty('username')
                             ?
-                            <a href={process.env.REACT_APP_LOGOUT} className='login'>Logout</a>
+                            <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
                             :
-                            <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
+                            <a href={process.env.REACT_APP_LOGIN}>Login</a>
                     }
 
                 </div>
@@ -79,49 +80,49 @@ class SearchResults extends Component {
                         <LoadingScreen />
                         :
                         <div className='search_results_container'>
-                            <div className='search_request'>
-                                <h1>Results for: {
-                                    this.props.userSearch
-                                }
-                                </h1>
-                                {
-                                    this.props.user.hasOwnProperty('username')
-                                        ?
-                                        <Link to='/logged_in_home/'>
-                                            <button onClick={() => this.props.clearResults()}>Back to Search</button>
-                                        </Link>
-                                        :
-                                        <Link to='/'>
-                                            <button onClick={() => this.props.clearResults()}>Back to Search</button>
-                                        </Link>
-                                }
-
-                            </div>
-                            <section>
-                                <div className='search_results_header'>
-
-                                    <section>
-                                        <h1>Artist</h1>
+                            <div className='search_container_header'>
+                                <section className='search_header_buttons'>
+                                    {
+                                        this.props.user.hasOwnProperty('username')
+                                            ?
+                                            <Link to='/logged_in_home/'>
+                                               <img src={backArrowLogo} onClick={() => this.props.clearResults()} />
+                                            </Link>
+                                            :
+                                            <Link to='/'>
+                                                <img src={backArrowLogo} onClick={() => this.props.clearResults()} />
+                                            </Link>
+                                    }
+                                    <section className='search_container_resultText'>
+                                        <h1>Results for: {this.props.userSearch}</h1>
                                     </section>
-
-                                    <section>
-                                        <h1>Song</h1>
-                                    </section>
-
-                                    <section>
-                                        <h1>Tab Type</h1>
-                                    </section>
-
-                                    <section>
-                                        <h1>Difficulty</h1>
-                                    </section>
-                                    
-                                </div>
-
-                                <section>
-                                    {filteredTabList}
                                 </section>
 
+
+                                    <section className='search_results_header'>
+
+                                        <section>
+                                            <h1>Artist</h1>
+                                        </section>
+
+                                        <section>
+                                            <h1>Song</h1>
+                                        </section>
+
+                                        <section>
+                                            <h1>Tab Type</h1>
+                                        </section>
+
+                                        <section>
+                                            <h1>Difficulty</h1>
+                                        </section>
+
+                                    </section>
+                            </div>
+
+
+                            <section className='search_content_container'>
+                                {filteredTabList}
                             </section>
                         </div>
                 } {/* End of turnary*/}

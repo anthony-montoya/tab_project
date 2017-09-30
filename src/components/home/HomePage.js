@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { updateTabList, setLoadingStatus, updateUserSearch } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
+import guitarVideo from '../../Resources/guitarVideo.mp4'
 
 class HomePage extends Component {
     constructor() {
@@ -38,20 +39,26 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div className='page_container'>
-                <div className='nav_container'>
+            <div className='home_page_container'>
+                <div className='fullscreen-bg'>
+                    <video loop muted autoPlay className="fullscreen-bg__video">
+                        <source src={guitarVideo} type="video/mp4" />
+                    </video>
+                </div>
+
+                <div className='home_hero_container'>
+                    <h1>Learning music has never been easier.</h1>
+                    <h4>Search below by song or artist to begin learning your favorite music.</h4>
+                </div>
+
+                {/* <div className='nav_container'>
                     <a href='/' className='site_name'>TabSlam</a>
-                    <a href={process.env.REACT_APP_LOGIN} className='login'>Login</a>
-                </div>
+                    
+                </div> */}
 
-                <div className='hero_container'>
-                    <h1>Learning music has never been easier</h1>
-                    <h4>Search below by song or artist to begin learning your favorite music</h4>
-                </div>
+                <div className='home_search_container'>
 
-                <div className='search_container'>
-
-                    <select className='select_menu' onChange={(event) => this.setState({
+                    <select className='home_select_menu' onChange={(event) => this.setState({
                         searchCategory: event.target.value, song: '', band: ''
                     })}>
                         <option value='band'>Band</option>
@@ -59,15 +66,22 @@ class HomePage extends Component {
 
                     </select>
 
-                    <input className='search_bar' value={this.state.searchCategory === 'band' ? this.state.band : this.state.song}
+                    <input className='home_search_bar' value={this.state.searchCategory === 'band' ? this.state.band : this.state.song}
                         placeholder='Search for a tab'
                         onChange={this.state.searchCategory === 'band' ? (event) => this.setState({ band: event.target.value })
                             : (event) => this.setState({ song: event.target.value })} />
 
-                    <button className='search_button' onClick={() => this.state.searchCategory === 'band' ?
-                        this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} > <Link to='/search-results'>Search</Link></button>
+                    <Link to='/search-results'>
+                        <button className='home_search_button' onClick={() => this.state.searchCategory === 'band' ?
+                            this.getTabsByBand(this.state.band) : this.getTabsBySong(this.state.song)} > Search</button>
+                    </Link>
 
                 </div>
+
+                <section className='home_login_container'>
+                    <hr />
+                    <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login</a>
+                </section>
 
             </div>
         )

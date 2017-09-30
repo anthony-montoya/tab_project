@@ -1,87 +1,83 @@
-.page_container {
-    background: linear-gradient(to bottom, #a90329 0%,#8f0222 42%,#230009 100%);
-    width: 100%;
-    min-height: 100vh;
+.search_page_container {
+    width: 100vw;
+    height: 100vh; 
+    background: url('../../Resources/backgroundGuitar.png') no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.nav_container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: black;
-    overflow: hidden;
+.search_nav_container {
+    height: 15vh;
     width: 100%;
-    height: 120px;
-    border-bottom: 3px solid grey; 
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3vw;
+    font-weight: lighter;
+    border-bottom: 1px solid grey;
 }
 
-.nav_container a {
-  position: relative;
-  color: white;
-  text-decoration: none;
+.search_nav_container a:nth-child(1) {
+    margin-left: 2vw;
 }
 
-.nav_container a:hover {
-  color: white;
-}
-
-.nav_container a:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: white;
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  -webkit-transition: all 0.2s ease-in-out 0s;
-}
-
-.nav_container a:hover:before {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-}
-
-.site_name {
-    font-family: 'SaniTrixieSansRegular'; 
-    font-weight: normal; 
-    font-style: normal;
-    font-size: 48px;
-    margin-left: 40px;
-    color: white;
-}
-
-.login {
-    font-family: 'SaniTrixieSansRegular'; 
-    font-weight: normal; 
-    font-style: normal;
-    font-size: 48px;
-    margin-right: 40px;
-    color: white;
+.search_nav_container a:nth-child(2) {
+    margin-right: 2vw;
 }
 
 .search_results_container {
-    width: 75%;
+    margin-top: 7.5vh;
+    width: 80vw;
     min-height: 10vh;
-    display: flex;
-    flex-direction: column;
+    max-height: 70vh;
+    border: 1px solid grey;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.search_results_header {
+.search_container_header {
+    width: 80vw;
+    height: 100px;
     display: flex;
-    justify-content: space-around;
-    border-bottom: .5px solid black;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid white;
+    position: fixed;
+}
+
+.search_header_buttons {
+    width: 80vw;
+    display: flex;
+    align-items: center;
+}
+
+ .search_header_buttons a {
+     width: 3%;
+ }
+
+ .search_header_buttons section {
+     width: 97%;
+     text-align: center;
+ }
+
+.search_results_header {
+    width: 80vw;
+    display: flex;
+    align-items: center;
 }
 
 .search_results_header section {
-    width: 25%;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-around;
+    width: 100%;
+    text-align: center;
+
+}
+
+.search_content_container {
+    margin-top: 100px;
+    height: 55vh;
+    overflow-y: auto;
 }
 
 .tab_content {
@@ -89,9 +85,7 @@
 }
 
 .tab_content section {
-    width: 25%;
-    border-bottom: 1px solid black;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-around;
+    width: 100%;
+    text-align: center;
 }
+
