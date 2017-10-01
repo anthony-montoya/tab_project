@@ -38,9 +38,7 @@ passport.use(new Auth0Strategy({
 }, function (accessToken, refreshToken, extraParams, profile, done) {
     const db = app.get('db');
     
-    console.log(profile.id);
     db.find_user(profile.id).then(user => {
-        console.log(user);
         if (user[0]) {
             return done(null, user[0]);
         } else {
@@ -64,7 +62,7 @@ passport.deserializeUser(function(user, done) {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/logged_in_home',
+    successRedirect: 'http://localhost:3000/#/',
     failureRedirect: 'http://localhost:3000/#/'
 }))
 
@@ -128,7 +126,6 @@ app.get('/api/tabContent', (req, res) => {
                     })
             })
         } else {
-            console.log('DB TAB ', dbTab[0]);
             res.status(200).send(dbTab[0])
         }
     })
@@ -137,8 +134,14 @@ app.get('/api/tabContent', (req, res) => {
 app.post('/api/addFavoriteTab', (req, res) => {
     const { tabId } = req.body;
 
-    app.get('db').add_favorites(req.user.user_id, tabId).then(response => {
+    app.get('db').add_favorites([req.user.user_id, tabId]).then(response => {
         res.status(200).send('Tab has been added');
+    })
+})
+
+app.get('/api/getFavorites/:user_id', (req, res) => {
+    app.get('db').get_favorites(req.params.user_id).then(response => {
+        res.status(200).send(response);
     })
 })
 

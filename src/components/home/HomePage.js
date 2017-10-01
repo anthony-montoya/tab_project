@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, setLoadingStatus, updateUserSearch } from '../../ducks/reducer';
+import { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
 import guitarVideo from '../../Resources/guitarVideo.mp4'
@@ -37,7 +37,16 @@ class HomePage extends Component {
             })
     }
 
+    componentDidMount() {
+        this.props.getUserInfo();
+    }
+
     render() {
+
+        if (this.props.user.hasOwnProperty('username')) {
+            this.props.updateHeader(this.props.user.username);
+        }
+
         return (
             <div className='home_page_container'>
                 <div className='fullscreen-bg'>
@@ -47,14 +56,9 @@ class HomePage extends Component {
                 </div>
 
                 <div className='home_hero_container'>
-                    <h1>Learning music has never been easier.</h1>
+                    <h1>{this.props.menuHeaderText}</h1>
                     <h4>Search below by song or artist to begin learning your favorite music.</h4>
                 </div>
-
-                {/* <div className='nav_container'>
-                    <a href='/' className='site_name'>TabSlam</a>
-                    
-                </div> */}
 
                 <div className='home_search_container'>
 
@@ -80,7 +84,16 @@ class HomePage extends Component {
 
                 <section className='home_login_container'>
                     <hr />
-                    <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login</a>
+                    {
+                        this.props.user.hasOwnProperty('username')
+                            ?
+                            <div className='loggedInButtons'>
+                                <Link to='/my-favorites' className='home_login_button'>My Favorites</Link>
+                                <a href={process.env.REACT_APP_LOGOUT} className='home_login_button'>Logout</a>
+                            </div>
+                            :
+                            <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login</a>
+                    }
                 </section>
 
             </div>
@@ -92,4 +105,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch })(HomePage);
+export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader })(HomePage);

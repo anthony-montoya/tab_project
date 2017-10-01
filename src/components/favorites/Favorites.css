@@ -1,4 +1,4 @@
-.page_container {
+/* .page_container {
     background: linear-gradient(to bottom, #a90329 0%,#8f0222 42%,#230009 100%);
     width: 100%;
     min-height: 100vh;
@@ -49,7 +49,7 @@ a:hover:before {
   -webkit-transform: scaleX(1);
 }
 
-.site_name {
+.logged_site_name {
     font-family: 'SaniTrixieSansRegular'; 
     font-weight: normal; 
     font-style: normal;
@@ -58,7 +58,7 @@ a:hover:before {
     color: white;
 }
 
-.login {
+.logged_login {
     font-family: 'SaniTrixieSansRegular'; 
     font-weight: normal; 
     font-style: normal;
@@ -139,4 +139,138 @@ p {
    font-family: 'SaniTrixieSansRegular'; 
    font-weight: normal; 
    font-style: normal; 
-} 
+}  
+
+.favorites_page_container {
+    width: 100vw;
+    height: 100vh; 
+    background: url('../../Resources/backgroundGuitar.png') no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.25vw;
+}
+
+.favorites_nav_container {
+    height: 10vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2.2vw;
+    font-weight: lighter;
+    border-bottom: 1px solid grey;
+}
+
+.favorites_nav_container a:nth-child(1) {
+    margin-left: 2vw;
+}
+
+.favorites_nav_container a:nth-child(2) {
+    margin-right: 2vw;
+}   */
+
+.search_page_container {
+    width: 100vw;
+    height: 100vh; 
+    background: url('../../Resources/backgroundGuitar.png') no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.25vw;
+}
+
+.search_nav_container {
+    height: 10vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2.2vw;
+    font-weight: lighter;
+    border-bottom: 1px solid grey;
+}
+
+.search_nav_container a:nth-child(1) {
+    margin-left: 2vw;
+}
+
+.search_nav_container a:nth-child(2) {
+    margin-right: 2vw;
+}
+
+.search_results_container {
+    margin-top: 10vh;
+    width: 90vw;
+    min-height: 10vh;
+    max-height: 70vh;
+    border: 1px solid grey;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.search_container_header {
+    width: 90vw;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid white;
+    position: fixed;
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+
+.search_header_buttons {
+    width: 90vw;
+    display: flex;
+    align-items: center;
+}
+
+ .search_header_buttons a {
+     width: 3%;
+ }
+
+ .search_header_buttons section {
+     width: 97%;
+     text-align: center;
+ }
+
+.search_results_header {
+    width: 90vw;
+    display: flex;
+    align-items: center;
+}
+
+.search_results_header section {
+    width: 100%;
+    text-align: center;
+}
+
+.search_content_container {
+    margin-top: 110px;
+    height: 55vh;
+    overflow-y: auto;
+}
+
+.tab_content {
+    display: flex;
+}
+
+.tab_content section {
+    width: 100%;
+    height: 11vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    font-size: 1.15vw;
+}
+
+.search_container_resultText {
+    font-weight: lighter;
+}

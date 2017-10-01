@@ -7,7 +7,8 @@ const initialState = {
     tabId: '',
     user: {},
     tabObject: {},
-    userSearch: ''
+    userSearch: '',
+    menuHeaderText: 'Learning music has never been easier',
 };
 
 //ACTION TYPES
@@ -23,6 +24,7 @@ const CLEAR_USER_SESSION = 'CLEAR_USER_SESSION';
 const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 const GET_TAB_OBJECT = 'GET_TAB_OBJECT';
 const UPDATE_USER_SEARCH = 'UPDATE_USER_SEARCH';
+const UPDATE_MENU_HEADER_TEXT = 'UPDATE_MENU_HEADER_TEXT';
 
 //ACTION CREATOR 
 export function updateTabList(tabList) {
@@ -101,6 +103,13 @@ export function updateUserSearch(search) {
 
 }
 
+export function updateHeader(username) {
+    return {
+        type: UPDATE_MENU_HEADER_TEXT,
+        payload: 'Welcome Back, ' + username
+    }
+}
+
 //REDUCER FUNCTION
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -139,6 +148,9 @@ export default function reducer(state = initialState, action) {
 
         case UPDATE_USER_SEARCH:
             return Object.assign({}, state, { userSearch: action.payload });
+
+        case UPDATE_MENU_HEADER_TEXT:
+            return Object.assign({}, state, { menuHeaderText: action.payload });
             
         default:
             return state;

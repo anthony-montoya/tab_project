@@ -20,8 +20,10 @@ class SearchResults extends Component {
                     this.props.renderTabResults(response.data.tab_content);
                     this.props.getTabId(response.data.tab_id);
                 }
-                else
+                else {
                     this.props.renderTabResults(response.data[0].tab_content);
+                    this.props.getTabObject(response.data[0]);
+                }
             })
     }
 
@@ -45,7 +47,13 @@ class SearchResults extends Component {
                     </section>
 
                     <section className='tab_difficultyContainer'>
-                        <h1>{tab.difficulty}</h1>
+                        {
+                            tab.difficulty
+                                ?
+                                <h1>{tab.difficulty}</h1>
+                                :
+                                <h1>-----</h1>
+                        }
                     </section>
 
                 </div>
@@ -82,42 +90,36 @@ class SearchResults extends Component {
                         <div className='search_results_container'>
                             <div className='search_container_header'>
                                 <section className='search_header_buttons'>
-                                    {
-                                        this.props.user.hasOwnProperty('username')
-                                            ?
-                                            <Link to='/logged_in_home/'>
-                                               <img src={backArrowLogo} onClick={() => this.props.clearResults()} />
-                                            </Link>
-                                            :
-                                            <Link to='/'>
-                                                <img src={backArrowLogo} onClick={() => this.props.clearResults()} />
-                                            </Link>
-                                    }
+
+                                    <Link to='/logged_in_home/'>
+                                        <img src={backArrowLogo} onClick={() => this.props.clearResults()} />
+                                    </Link>
+                                    
                                     <section className='search_container_resultText'>
                                         <h1>Results for: {this.props.userSearch}</h1>
                                     </section>
+
                                 </section>
 
+                                <section className='search_results_header'>
 
-                                    <section className='search_results_header'>
-
-                                        <section>
-                                            <h1>Artist</h1>
-                                        </section>
-
-                                        <section>
-                                            <h1>Song</h1>
-                                        </section>
-
-                                        <section>
-                                            <h1>Tab Type</h1>
-                                        </section>
-
-                                        <section>
-                                            <h1>Difficulty</h1>
-                                        </section>
-
+                                    <section>
+                                        <h1>Artist</h1>
                                     </section>
+
+                                    <section>
+                                        <h1>Song</h1>
+                                    </section>
+
+                                    <section>
+                                        <h1>Tab Type</h1>
+                                    </section>
+
+                                    <section>
+                                        <h1>Difficulty</h1>
+                                    </section>
+
+                                </section>
                             </div>
 
 

@@ -18,7 +18,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10vh;
+    margin-bottom: 7vh;
 }
 
 .home_hero_container h1 {
@@ -30,7 +30,8 @@ body {
  .home_hero_container h1:after {
 	content: '';
 	display: block;
-	margin: auto;
+    margin: auto;
+    margin-top: 10px;
 	height: 2px;
     background: white;
     -webkit-animation: fadeUnderlineIn 2.2s;
@@ -53,6 +54,7 @@ body {
     font-weight: lighter;
     font-size: 1.5vw;
     -webkit-animation: fadeInH4 3s;
+    margin-top: 5vh;
 }
 
 @keyframes fadeInH4 {
@@ -76,13 +78,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.3;
+    opacity: 0.15;
     animation: videoFadeIn 3s;
 }
 
 @keyframes videoFadeIn {
     0% { filter: blur(0px); opacity: 0.8; }
-    100% { filter: blur(5px); opacity: 0.3; }
+    100% { filter: blur(5px); opacity: 0.15; }
 }
 
 
@@ -171,6 +173,13 @@ body {
     font-size: 1.5vw;
 }
 
+.loggedInButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20vw;
+}
+
 .home_search_button:hover {
     background-color:lightgray;
 }
@@ -186,7 +195,9 @@ body {
 
 .home_login_container {
     -webkit-animation: fadeInH4 4s;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 

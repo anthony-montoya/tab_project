@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'OrkneyRegular'; 
+  font-family: 'OrkneyRegular' !important;
 }
 
 a:hover, a:visited, a:link, a:active {

@@ -1,12 +1,12 @@
+import './reset.css';
 import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from './components/home/HomePage';
-import LoggedInHome from './components/logged_in_home_page/LoggedInHome';
 import SearchResults from './components/search_results/SearchResults';
 import TabResults from './components/tabs/TabResults';
-import LoggedInFavorites from './components/logged_in_favorites/LoggedInFavorites';
+import Favorites from './components/favorites/Favorites';
 
 class App extends Component {
   render() {
@@ -15,10 +15,9 @@ class App extends Component {
 
         <Switch>
           <Route exact path='/' component={ HomePage } />
-          <Route path='/logged_in_home' component={ LoggedInHome } />
           <Route path='/search-results' component={ SearchResults } />
           <Route path='/tab-results' component={ TabResults } />
-          <Route path='/profile/favorites' component={ LoggedInFavorites } />
+          <Route path='/my-favorites' component={ Favorites } />
         </Switch>
 
       </div>   
