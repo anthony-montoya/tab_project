@@ -1,43 +1,11 @@
-.search_page_container {
-    width: 100vw;
-    height: 100vh; 
-    background: url('../../Resources/backgroundGuitar.png') no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.25vw;
-}
-
-.search_nav_container {
-    height: 10vh;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 2.2vw;
-    font-weight: lighter;
-    border-bottom: 1px solid grey;
-}
-
-.search_nav_container a:nth-child(1) {
-    margin-left: 2vw;
-}
-
-.search_nav_container a:nth-child(2) {
-    margin-right: 2vw;
-}
-
-.home_search_container {
+.searchBar_search_container {
     height: 6vh;
     width: 50vw;
     display: flex;
-    -webkit-animation: fadeInH4 4s;
     box-shadow: 3px 3px black;
 }
 
-.home_select_menu {
+.searchBar_select_menu {
     font-size: 1.2vw;
     border-style: none;
     background-color: rgb(230, 230, 230);
@@ -53,11 +21,11 @@
     width: 10vw;
     border-right: 1px solid black;
 }
-.home_select_menu:hover {
+.searchBar_select_menu:hover {
     background-color:lightgray;
 }
 
-.home_search_bar {
+.searchBar_search_bar {
     font-size: 1.5vw;
     border-style: none;
     background-color: rgb(230, 230, 230);
@@ -70,7 +38,7 @@
     border-right: 1px solid black;
 }
 
-.home_search_button {
+.searchBar_search_button {
     font-size: 1.2vw;
     border-style: none;
     background-color: rgb(230, 230, 230);
@@ -81,92 +49,4 @@
     height: 100%;
     width: 10vw;
     border-right: 1px solid black;
-}
-
-.search_results_container {
-    margin-top: 2.5vw !important;
-    width: 90vw;
-    min-height: 10vh;
-    max-height: 70vh;
-    border: 1px solid grey;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.search_container_header {
-    width: 90vw;
-    height: 110px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border-bottom: 1px solid white;
-    position: fixed;
-    font-size: 1.8vw;
-    font-weight: bold;
-}
-
-.search_header_buttons {
-    width: 90vw;
-    display: flex;
-    align-items: center;
-}
-
- .search_header_buttons a {
-     width: 3%;
- }
-
- .search_header_buttons section {
-     width: 97%;
-     text-align: center;
- }
-
-.search_results_header {
-    width: 90vw;
-    display: flex;
-    align-items: center;
-}
-
-.search_results_header section {
-    width: 100%;
-    text-align: center;
-}
-
-.search_content_container {
-    margin-top: 110px;
-    height: 53vh !important;
-    overflow-y: auto;
-}
-
-.tab_content {
-    display: flex;
-}
-
-.tab_content section {
-    width: 100%;
-    height: 11vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid grey;
-    font-size: 1.15vw;
-}
-
-.search_container_resultText {
-    font-weight: lighter;
-}
-
-.favorite_nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 1vw;
-    width: 30vw;
-}
-
-.search_bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2.5vw;
 }

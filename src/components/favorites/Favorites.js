@@ -1,31 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getTabObject, setFavoritesStatus, getFavorites, clearResults } from '../../ducks/reducer';
 import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
-class Favorites extends Component {
-    constructor() {
-        super();
 
-        this.state = {
-            userFavorites: []
+class Favorites extends Component {
+
+    componentDidMount() {
+        if (this.props.user.hasOwnProperty('username')) {
+            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+                .then(response => {
+                    this.props.getFavorites(response.data)
+                })
         }
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+    setFavoriteTab(position) {
+        this.props.getTabObject(this.props.userFavorites[position]);
+        this.props.setFavoritesStatus(true);
+    }
+
+    deleteFavoriteTab(user_id, tab_id) {
+        const favData = { user_id: user_id, tab_id: tab_id }
+        axios.post('/api/deleteFavorite', favData)
             .then(response => {
-                console.log('res ', response);
-                this.setState({
-                    userFavorites: response.data
-                })
+                this.props.getFavorites(response.data);
             })
     }
 
     render() {
-        let favoritesList = this.state.userFavorites.map((favorites, i) => {
+        let favoritesList = this.props.userFavorites.map((favorites, i) => {
             return <div className='tab_content' key={i}>
 
                 <section>
@@ -33,16 +40,30 @@ class Favorites extends Component {
                 </section>
 
                 <section>
-                    <h1>{favorites.name}</h1>
+                    <Link to='/tab-results' onClick={() => this.setFavoriteTab(i)}>
+                        <h1>{favorites.name}</h1>
+                    </Link>
                 </section>
 
                 <section>
                     <h1>{favorites.tab_type}</h1>
                 </section>
 
-                <section>
-                    <h1>{favorites.difficulty}</h1>
+                <section className='fav_difficulty'>
+                    {
+                        favorites.difficulty.includes('undefined')
+                            ?
+                            <h1 style={{ marginLeft: '2vw' }}>-----</h1>
+                            :
+                            <h1 style={{ marginLeft: '2vw' }}>{favorites.difficulty}</h1>
+                    }
+
                 </section>
+
+                <div className='delete_favorites'>
+                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.deleteFavoriteTab(this.props.user.user_id, favorites.tab_id)}></i>
+                </div>
+
             </div>
         })
         return (
@@ -52,7 +73,7 @@ class Favorites extends Component {
                     {
                         this.props.user.hasOwnProperty('username')
                             ?
-                            <a href='/#/logged_in_home'>TabSlam</a>
+                            <a href='/'>TabSlam</a>
                             :
                             <a href='/'>TabSlam</a>
                     }
@@ -72,7 +93,7 @@ class Favorites extends Component {
                         <section className='search_header_buttons'>
 
                             <Link to='/'>
-                                <img src={backArrowLogo}/>
+                                <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()}/>
                             </Link>
 
                             <section className='search_container_resultText'>
@@ -108,43 +129,6 @@ class Favorites extends Component {
                 </div>
 
             </div>
-            // <div className='favorites_page_container'>
-
-            //     <div className='favorites_nav_container'>
-
-            //         <a href='/'>TabSlam</a>
-            //         {
-            //             this.props.user.hasOwnProperty('username')
-            //                 ?
-            //                 <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
-            //                 :
-            //                 <a href={process.env.REACT_APP_LOGIN}>Login</a>
-            //         }
-
-            //     </div>
-            //     <section>
-            //         <div className='favorites_header'>
-
-            //             <section>
-            //                 <h1>Artist</h1>
-            //             </section>
-
-            //             <section>
-            //                 <h1>Song</h1>
-            //             </section>
-
-            //             <section>
-            //                 <h1>Tab Type</h1>
-            //             </section>
-
-            //             <section>
-            //                 <h1>Difficulty</h1>
-            //             </section>
-
-            //         </div>
-            //     </section>
-            //     {favoritesList}
-            // </div>
         )
     }
 }
@@ -153,4 +137,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, { getTabObject, setFavoritesStatus, getFavorites, clearResults })(Favorites);

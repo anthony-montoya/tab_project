@@ -67,7 +67,6 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 }))
 
 app.get('/auth/me', (req, res) => {
-    console.log(req.user);
     if (!req.user) {
         return res.status(404).send('User not found');
     } else {
@@ -142,6 +141,16 @@ app.post('/api/addFavoriteTab', (req, res) => {
 app.get('/api/getFavorites/:user_id', (req, res) => {
     app.get('db').get_favorites(req.params.user_id).then(response => {
         res.status(200).send(response);
+    })
+})
+
+app.post('/api/deleteFavorite', (req, res) => {
+    const { user_id, tab_id } = req.body;
+
+    app.get('db').delete_favorite_tab([user_id, tab_id]).then(response => {
+        app.get('db').get_favorites(user_id).then(userFavorites => {
+            res.send(userFavorites);
+        });
     })
 })
 

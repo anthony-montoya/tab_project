@@ -9,6 +9,8 @@ const initialState = {
     tabObject: {},
     userSearch: '',
     menuHeaderText: 'Learning music has never been easier',
+    isFromFavorites: false,
+    userFavorites: []
 };
 
 //ACTION TYPES
@@ -25,6 +27,8 @@ const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 const GET_TAB_OBJECT = 'GET_TAB_OBJECT';
 const UPDATE_USER_SEARCH = 'UPDATE_USER_SEARCH';
 const UPDATE_MENU_HEADER_TEXT = 'UPDATE_MENU_HEADER_TEXT';
+const SET_FAVORITES_STATUS = 'SET_FAVORITES_STATUS';
+const GET_USER_FAVORITES = 'GET_USER_FAVORITES';
 
 //ACTION CREATOR 
 export function updateTabList(tabList) {
@@ -110,6 +114,20 @@ export function updateHeader(username) {
     }
 }
 
+export function setFavoritesStatus(status) {
+    return {
+        type: SET_FAVORITES_STATUS,
+        payload: status
+    }
+}
+
+export function getFavorites(favorites) {
+    return {
+        type: GET_USER_FAVORITES,
+        payload: favorites
+    }
+}
+
 //REDUCER FUNCTION
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -151,6 +169,12 @@ export default function reducer(state = initialState, action) {
 
         case UPDATE_MENU_HEADER_TEXT:
             return Object.assign({}, state, { menuHeaderText: action.payload });
+
+        case SET_FAVORITES_STATUS:
+            return Object.assign({}, state, { isFromFavorites: action.payload });
+
+        case GET_USER_FAVORITES:
+            return Object.assign({}, state, { userFavorites: action.payload });
             
         default:
             return state;

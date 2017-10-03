@@ -78,13 +78,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.15;
+    opacity: 0.3;
     animation: videoFadeIn 3s;
 }
 
 @keyframes videoFadeIn {
     0% { filter: blur(0px); opacity: 0.8; }
-    100% { filter: blur(5px); opacity: 0.15; }
+    100% { filter: blur(5px); opacity: 0.3; }
 }
 
 
@@ -199,6 +199,3 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
-
-

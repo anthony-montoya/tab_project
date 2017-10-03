@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader } from '../../ducks/reducer';
+import { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader, getFavorites } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
 import guitarVideo from '../../Resources/guitarVideo.mp4'
@@ -39,6 +39,12 @@ class HomePage extends Component {
 
     componentDidMount() {
         this.props.getUserInfo();
+        if (this.props.user.hasOwnProperty('username')) {
+            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+                .then(response => {
+                    this.props.getFavorites(response.data)
+                })
+        }
     }
 
     render() {
@@ -92,7 +98,7 @@ class HomePage extends Component {
                                 <a href={process.env.REACT_APP_LOGOUT} className='home_login_button'>Logout</a>
                             </div>
                             :
-                            <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login</a>
+                            <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login to TabSlam</a>
                     }
                 </section>
 
@@ -105,4 +111,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader })(HomePage);
+export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader, getFavorites })(HomePage);
