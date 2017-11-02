@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader, getFavorites } from '../../ducks/reducer';
 import axios from 'axios';
 import './Home.css';
-import guitarVideo from '../../Resources/guitarVideo.mp4'
 
 class HomePage extends Component {
     constructor() {
@@ -57,7 +56,7 @@ class HomePage extends Component {
             <div className='home_page_container'>
                 <div className='fullscreen-bg'>
                     <video loop muted autoPlay className="fullscreen-bg__video">
-                        <source src={guitarVideo} type="video/mp4" />
+                        <source src='https://giant.gfycat.com/GracefulTightGermanspaniel.webm' type="video/mp4" />
                     </video>
                 </div>
 

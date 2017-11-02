@@ -30,8 +30,6 @@ class TabResults extends Component {
     }
 
     render() {
-        console.log('props ', this.props.tabObject.difficulty)
-
         let tabID;
         let isFavorite = false
 

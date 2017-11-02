@@ -12,6 +12,7 @@ const express = require('express')
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use( express.static( `${__dirname}/../build` ) );
 
 //Middleware
 app.use(session({
@@ -62,8 +63,8 @@ passport.deserializeUser(function(user, done) {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/',
-    failureRedirect: 'http://localhost:3000/#/'
+    successRedirect: '/',
+    failureRedirect: '/'
 }))
 
 app.get('/auth/me', (req, res) => {
@@ -76,7 +77,7 @@ app.get('/auth/me', (req, res) => {
 
 app.get('/auth/logout', (req, res) => {
     req.logout(); //Passport gives us this to terminate a login session
-    return res.redirect(302, 'http://localhost:3000/#/');
+    return res.redirect(302, '/');
 })
 
 //API CALLS
