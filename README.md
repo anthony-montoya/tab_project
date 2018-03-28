@@ -1,7 +1,9 @@
-Grab was a group project made with 3 other developers at DevMountains immersive Web Development course. Majority of the project was written in pair programming sessions. 
+Learning music has never been easier.
 
-Tech Used- React, Redux, NodeJS, Massive, JavaScript, AWS, PostgreSQL, HTML5 & CSS3.
+Award given for "Best CSS" at DevMountain.
 
-This web application is a local classifieds for people to buy/sell/trade goods locally. We also implemented a built in chat feature so you don't have to give out your personal phone number.
+Full stack web application. Tech used: React, Redux, NodeJS, JavaScript, Massive, PostgreSQL, HTML5 & CSS3.
 
-Grab allows users to sumbit a posting for sale, search and filter through already submitted postings. Users can also view peoples profiles and other listings they may have. User's can also edit/delete postings they have submitted.
+TabSlam is a site for musicians to search for their favorite songs and get guitar tablature that will aid them in learning the song of their choice.
+
+My database is self growing. Each search that isn't in my database already it will be added and the next time it is searched, the result will be much faster than a 3rd party api call. Feel free to check out the source code and give any feedback or suggestions. Thank you!
