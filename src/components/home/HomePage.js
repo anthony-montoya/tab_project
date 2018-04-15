@@ -12,14 +12,14 @@ class HomePage extends Component {
         this.state = {
             band: '',
             song: '',
-            searchCategory: 'band',
+            searchCategory: '',
         }
         this.getTabsByBand = this.getTabsByBand.bind(this);
         this.getTabsBySong = this.getTabsBySong.bind(this);
     }
 
     getTabsByBand(band) {
-        axios.get(`http://localhost:3020/api/bandSearch?bandName=${this.state.band}`)
+        axios.get(`/api/bandSearch/${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -28,7 +28,7 @@ class HomePage extends Component {
     }
 
     getTabsBySong(song) {
-        axios.get(`http://localhost:3020/api/songSearch?songName=${this.state.song}`)
+        axios.get(`/api/songSearch/${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -39,7 +39,7 @@ class HomePage extends Component {
     componentDidMount() {
         this.props.getUserInfo();
         if (this.props.user.hasOwnProperty('username')) {
-            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+            axios.get('/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })

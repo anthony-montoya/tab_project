@@ -14,9 +14,9 @@ class SearchResults extends Component {
         var tabUrl = tabObj.url;
         var tabDifficulty = tabObj.difficulty;
 
-        axios.get(`http://localhost:3020/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
+        axios.get(`/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
             .then((response) => {
-                if (response.data.tab_content) {
+                if (response.data) {
                     this.props.getTabObject(response.data);
                     this.props.renderTabResults(response.data.tab_content);
                     this.props.getTabId(response.data.tab_id);
@@ -31,8 +31,7 @@ class SearchResults extends Component {
     componentDidMount() {
         this.props.setFavoritesStatus(false);
         if (this.props.user.hasOwnProperty('username')) {
-            console.log(this.props.user.user_id)
-            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+            axios.get('/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -41,6 +40,7 @@ class SearchResults extends Component {
 
     render() {
         let filteredTabList = this.props.tabList.map((tab, i) => {
+            console.log(tab);
             if (!tab.type.includes('pro') && !tab.type.includes('official')) {
                 return <div className='tab_content' key={i}>
 
@@ -49,7 +49,7 @@ class SearchResults extends Component {
                     </section>
 
                     <section className='tab_songContainer'>
-                        <Link to='/tab-results'>
+                        <Link to={{ pathname: '/tab-results', tabUrl: tab.url}}>
                             <h1 onClick={() => this.getContentText(this.props.tabList[i])}>{tab.name}</h1>
                         </Link>
                     </section>
@@ -58,7 +58,7 @@ class SearchResults extends Component {
                         <h1>{tab.type}</h1>
                     </section>
 
-                    <section className='tab_difficultyContainer'>
+                    {/* <section className='tab_difficultyContainer'>
                         {
                             tab.difficulty
                                 ?
@@ -66,7 +66,7 @@ class SearchResults extends Component {
                                 :
                                 <h1>-----</h1>
                         }
-                    </section>
+                    </section> */}
 
                 </div>
             }
@@ -79,9 +79,9 @@ class SearchResults extends Component {
                     {
                         this.props.user.hasOwnProperty('username')
                             ?
-                            <a href='/'>TabSlam</a>
+                            <a href='/home'>TabSlam</a>
                             :
-                            <a href='/'>TabSlam</a>
+                            <a href='/home'>TabSlam</a>
                     }
 
                     {
@@ -110,7 +110,7 @@ class SearchResults extends Component {
                             <div className='search_container_header'>
                                 <section className='search_header_buttons'>
 
-                                    <Link to='/'>
+                                    <Link to='/home'>
                                         <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
                                     </Link>
 
@@ -133,10 +133,10 @@ class SearchResults extends Component {
                                     <section>
                                         <h1>Tab Type</h1>
                                     </section>
-
+{/* 
                                     <section>
                                         <h1>Difficulty</h1>
-                                    </section>
+                                    </section> */}
 
                                 </section>
                             </div>

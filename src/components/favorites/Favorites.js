@@ -11,7 +11,7 @@ class Favorites extends Component {
 
     componentDidMount() {
         if (this.props.user.hasOwnProperty('username')) {
-            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+            axios.get('/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })

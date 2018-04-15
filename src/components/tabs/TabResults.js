@@ -13,7 +13,7 @@ class TabResults extends Component {
 
         axios.post('/api/addFavoriteTab', config).then(res => {
             if (this.props.user.hasOwnProperty('username')) {
-                axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+                axios.get('/api/getFavorites/' + this.props.user.user_id)
                     .then(response => {
                         this.props.getFavorites(response.data)
                     })
@@ -51,7 +51,7 @@ class TabResults extends Component {
 
                 <div className='tab_nav_container'>
 
-                    <a href='/'>TabSlam</a>
+                    <a href='/home'>TabSlam</a>
 
                     {
                         this.props.user.hasOwnProperty('username')
@@ -90,7 +90,7 @@ class TabResults extends Component {
                             <h4>{'By: ' + this.props.tabObject.artist}</h4>
                         </section>
 
-                        <section>
+                        {/* <section>
                             {
                                 this.props.tabObject.difficulty === 'undefined'
                                     ?
@@ -98,7 +98,7 @@ class TabResults extends Component {
                                     :
                                     <h3>{'Tab Difficulty: ' + this.props.tabObject.difficulty}</h3>
                             }
-                        </section>
+                        </section> */}
 
                         <section>
                             {
@@ -136,11 +136,7 @@ class TabResults extends Component {
                     <div className='tab_selected_content'>
                         <pre>
                             {
-                                this.props.tabObject.tab_content
-                                    ?
-                                    this.props.tabObject.tab_content
-                                    :
-                                    this.props.tabContent
+                                this.props.tabObject.content
                             }
                         </pre>
                     </div>

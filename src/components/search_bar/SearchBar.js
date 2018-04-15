@@ -19,7 +19,7 @@ class SearchBar extends Component {
     }
 
     getTabsByBand(band) {
-        axios.get(`http://localhost:3020/api/bandSearch?bandName=${this.state.band}`)
+        axios.get(`/api/bandSearch/${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 // this.props.setLoadingStatus(false);
@@ -28,7 +28,7 @@ class SearchBar extends Component {
     }
 
     getTabsBySong(song) {
-        axios.get(`http://localhost:3020/api/songSearch?songName=${this.state.song}`)
+        axios.get(`/api/songSearch/${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 // this.props.setLoadingStatus(false);
