@@ -65,6 +65,7 @@ class TabResults extends Component {
                             :
                             <a href={process.env.REACT_APP_LOGIN}>Login</a>
                     }
+                    <a href='/home'>TabSlam</a>
 
                 </div>
 
