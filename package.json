@@ -6,6 +6,7 @@
     "axios": "^0.16.2",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "express-session": "^1.15.6",
     "fixed-data-table": "^0.6.4",
     "massive": "^4.4.0",
@@ -28,9 +29,6 @@
     "eject": "react-scripts eject",
     "now-start": "node server/server.js",
     "deploy": "now --public --dotenv=.env.prod -d"
-  },
-  "now": {
-    "alias": "a-montoya-tabslam"
   },
   "proxy": "http://localhost:3020"
 }
