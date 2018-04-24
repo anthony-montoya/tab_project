@@ -14,7 +14,7 @@ class SearchResults extends Component {
         var tabUrl = tabObj.url;
         var tabDifficulty = tabObj.difficulty;
 
-        axios.get(`/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
+        axios.get(`https://protected-headland-78198.herokuapp.com/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
             .then((response) => {
                 if (response.data) {
                     this.props.getTabObject(response.data);
@@ -31,7 +31,7 @@ class SearchResults extends Component {
     componentDidMount() {
         this.props.setFavoritesStatus(false);
         if (this.props.user.hasOwnProperty('username')) {
-            axios.get('/api/getFavorites/' + this.props.user.user_id)
+            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -40,7 +40,6 @@ class SearchResults extends Component {
 
     render() {
         let filteredTabList = this.props.tabList.map((tab, i) => {
-            console.log(tab);
             if (!tab.type.includes('pro') && !tab.type.includes('official')) {
                 return <div className='tab_content' key={i}>
 
@@ -49,7 +48,7 @@ class SearchResults extends Component {
                     </section>
 
                     <section className='tab_songContainer'>
-                        <Link to={{ pathname: '/tab-results', tabUrl: tab.url}}>
+                        <Link to={{ pathname: '/tab-results', tabUrl: tab.url }}>
                             <h1 onClick={() => this.getContentText(this.props.tabList[i])}>{tab.name}</h1>
                         </Link>
                     </section>
@@ -105,47 +104,47 @@ class SearchResults extends Component {
                         <LoadingScreen />
                         :
                         <div className='search_bar'>
-                        <SearchBar />
-                        <div className='search_results_container'>
-                            <div className='search_container_header'>
-                                <section className='search_header_buttons'>
+                            <SearchBar />
+                            <div className='search_results_container'>
+                                <div className='search_container_header'>
+                                    <section className='search_header_buttons'>
 
-                                    <Link to='/home'>
-                                        <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
-                                    </Link>
+                                        <Link to='/home'>
+                                            <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
+                                        </Link>
 
-                                    <section className='search_container_resultText'>
-                                        <h1>Results for: {this.props.userSearch}</h1>
+                                        <section className='search_container_resultText'>
+                                            <h1>Results for: {this.props.userSearch}</h1>
+                                        </section>
+
                                     </section>
 
-                                </section>
+                                    <section className='search_results_header'>
 
-                                <section className='search_results_header'>
+                                        <section>
+                                            <h1>Artist</h1>
+                                        </section>
 
-                                    <section>
-                                        <h1>Artist</h1>
-                                    </section>
+                                        <section>
+                                            <h1>Song</h1>
+                                        </section>
 
-                                    <section>
-                                        <h1>Song</h1>
-                                    </section>
-
-                                    <section>
-                                        <h1>Tab Type</h1>
-                                    </section>
-{/* 
+                                        <section>
+                                            <h1>Tab Type</h1>
+                                        </section>
+                                        {/* 
                                     <section>
                                         <h1>Difficulty</h1>
                                     </section> */}
 
+                                    </section>
+                                </div>
+
+
+                                <section className='search_content_container'>
+                                    {filteredTabList}
                                 </section>
                             </div>
-
-
-                            <section className='search_content_container'>
-                                {filteredTabList}
-                            </section>
-                        </div>
                         </div>
                 } {/* End of turnary*/}
 

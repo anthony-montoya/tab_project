@@ -11,7 +11,7 @@ class Favorites extends Component {
 
     componentDidMount() {
         if (this.props.user.hasOwnProperty('username')) {
-            axios.get('/api/getFavorites/' + this.props.user.user_id)
+            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -25,7 +25,7 @@ class Favorites extends Component {
 
     deleteFavoriteTab(user_id, tab_id) {
         const favData = { user_id: user_id, tab_id: tab_id }
-        axios.post('/api/deleteFavorite', favData)
+        axios.post('https://protected-headland-78198.herokuapp.com/api/deleteFavorite', favData)
             .then(response => {
                 this.props.getFavorites(response.data);
             })

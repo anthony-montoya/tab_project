@@ -11,9 +11,9 @@ class TabResults extends Component {
     add(tabId) {
         const config = { tabId: tabId, userId: this.props.user.user_id }
 
-        axios.post('/api/addFavoriteTab', config).then(res => {
+        axios.post('https://protected-headland-78198.herokuapp.com/api/addFavoriteTab', config).then(res => {
             if (this.props.user.hasOwnProperty('username')) {
-                axios.get('/api/getFavorites/' + this.props.user.user_id)
+                axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
                     .then(response => {
                         this.props.getFavorites(response.data)
                     })
