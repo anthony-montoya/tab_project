@@ -6,14 +6,12 @@ import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
-//https://protected-headland-78198.herokuapp.com
 class Favorites extends Component {
 
     componentDidMount() {
         if (this.props.user.hasOwnProperty('displayName')) {
-            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+            axios.get('https://tab-slam-server.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
-                    console.log('response', response)
                     this.props.getFavorites(response.data)
                 })
         }
@@ -26,17 +24,14 @@ class Favorites extends Component {
 
     deleteFavoriteTab(user_id, tab_id) {
         const favData = { user_id: user_id, tab_id: tab_id }
-        console.log('favData', favData);
-        axios.post('http://localhost:3020/api/deleteFavorite', favData)
+        axios.post('https://tab-slam-server.herokuapp.com/api/deleteFavorite', favData)
             .then(response => {
                 this.props.getFavorites(response.data);
             })
     }
 
     render() {
-        console.log('userFav',this.props.userFavorites)
         let favoritesList = this.props.userFavorites.map((favorites, i) => {
-            {{console.log(favorites)}}
             return <div className='tab_content' key={i}>
 
                 <section>

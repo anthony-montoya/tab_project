@@ -115,7 +115,6 @@ export function setFavoritesStatus(status) {
 }
 
 export function getFavorites(favorites) {
-    console.log('FAVORITES', favorites);
     return {
         type: GET_USER_FAVORITES,
         payload: favorites

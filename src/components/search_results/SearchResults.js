@@ -13,9 +13,7 @@ class SearchResults extends Component {
     getContentText(tabObj) {
         let tabUrl = tabObj.url;
 
-        //STUCK WHERE DATA COMES BACK DIFFERENTLY BASED ON IF ITS FROM THE DB OR NOT.
-        //FIRST TIME SEARCHES WORK 100%, CRASHES WHEN VIEWING THE SAME TAB THAT WAS SEARCHED PREVIOUSLY AND ENTERED INTO DB.
-        axios.get(`http://localhost:3020/api/tabContent?tabUrl=${tabUrl}`)
+        axios.get(`https://tab-slam-server.herokuapp.com/api/tabContent?tabUrl=${tabUrl}`)
             .then((response) => {
                 response.data.url = tabUrl;
                 if (response.data.content) {
@@ -33,7 +31,7 @@ class SearchResults extends Component {
     componentDidMount() {
         this.props.setFavoritesStatus(false);
         if (this.props.user.hasOwnProperty('displayName')) {
-            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
+            axios.get('https://tab-slam-server.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -58,16 +56,6 @@ class SearchResults extends Component {
                     <section className='tab_typeContainer'>
                         <h1>{tab.type}</h1>
                     </section>
-
-                    {/* <section className='tab_difficultyContainer'>
-                        {
-                            tab.difficulty
-                                ?
-                                <h1>{tab.difficulty}</h1>
-                                :
-                                <h1>-----</h1>
-                        }
-                    </section> */}
 
                 </div>
             }
