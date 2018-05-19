@@ -11,18 +11,20 @@ import SearchBar from '../search_bar/SearchBar';
 class SearchResults extends Component {
     //THIS CURRENTLY HAS THE URL FOR THE TAB THE USER WANTS
     getContentText(tabObj) {
-        var tabUrl = tabObj.url;
-        var tabDifficulty = tabObj.difficulty;
+        let tabUrl = tabObj.url;
 
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
+        //STUCK WHERE DATA COMES BACK DIFFERENTLY BASED ON IF ITS FROM THE DB OR NOT.
+        //FIRST TIME SEARCHES WORK 100%, CRASHES WHEN VIEWING THE SAME TAB THAT WAS SEARCHED PREVIOUSLY AND ENTERED INTO DB.
+        axios.get(`http://localhost:3020/api/tabContent?tabUrl=${tabUrl}`)
             .then((response) => {
-                if (response.data) {
+                response.data.url = tabUrl;
+                if (response.data.content) {
                     this.props.getTabObject(response.data);
-                    this.props.renderTabResults(response.data.tab_content);
+                    this.props.renderTabResults(response.data.content);
                     this.props.getTabId(response.data.tab_id);
                 }
                 else {
-                    this.props.renderTabResults(response.data[0].tab_content);
+                    this.props.renderTabResults(response.data[0].content);
                     this.props.getTabObject(response.data[0]);
                 }
             })
@@ -30,8 +32,8 @@ class SearchResults extends Component {
 
     componentDidMount() {
         this.props.setFavoritesStatus(false);
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+        if (this.props.user.hasOwnProperty('displayName')) {
+            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -76,7 +78,7 @@ class SearchResults extends Component {
 
                 <div className='search_nav_container'>
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <a href='/home'>TabSlam</a>
                             :
@@ -84,7 +86,7 @@ class SearchResults extends Component {
                     }
 
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <div className='favorite_nav'>
                                 <Link to='/my-favorites'>

@@ -19,7 +19,7 @@ class HomePage extends Component {
     }
 
     getTabsByBand(band) {
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/bandSearch/${this.state.band}`)
+        axios.get(`http://localhost:3020/api/bandSearch/${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -28,7 +28,7 @@ class HomePage extends Component {
     }
 
     getTabsBySong(song) {
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/songSearch/${this.state.song}`)
+        axios.get(`http://localhost:3020/api/songSearch/${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -37,19 +37,21 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        this.props.getUserInfo();
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
-                .then(response => {
-                    this.props.getFavorites(response.data)
-                })
-        }
+        // this.props.getUserInfo();
+        axios.get('/auth/me').then(res => {
+            if (res.data !== 'User not found') {
+                this.props.getUserInfo(res.data)
+                // axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+                // .then(response => {
+                //     this.props.getFavorites(response.data)
+                // })
+            }
+        })
     }
 
     render() {
-
-        if (this.props.user.hasOwnProperty('username')) {
-            this.props.updateHeader(this.props.user.username);
+        if (this.props.user.hasOwnProperty('displayName')) {
+            this.props.updateHeader(this.props.user.displayName);
         }
 
         return (
@@ -90,7 +92,7 @@ class HomePage extends Component {
                 <section className='home_login_container'>
                     <hr />
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <div className='loggedInButtons'>
                                 <Link to='/my-favorites' className='home_login_button'>My Favorites</Link>

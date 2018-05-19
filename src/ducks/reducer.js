@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const initialState = {
     tabList: [],
     tabContent: '',
@@ -66,12 +64,7 @@ export function getTabId(tabId) {
     }
 }
 
-export function getUserInfo() {
-    let userInfo = axios.get('/auth/me').then(res => {
-        if (res.data !== 'User not found') {
-            return res.data;
-        }
-    })
+export function getUserInfo(userInfo) {
     return {
         type: GET_USER_INFO,
         payload: userInfo
@@ -122,6 +115,7 @@ export function setFavoritesStatus(status) {
 }
 
 export function getFavorites(favorites) {
+    console.log('FAVORITES', favorites);
     return {
         type: GET_USER_FAVORITES,
         payload: favorites
@@ -152,7 +146,7 @@ export default function reducer(state = initialState, action) {
         case GET_TAB_ID:
             return Object.assign({}, state, { tabId: action.payload });
 
-        case GET_USER_INFO + '_FULFILLED':
+        case GET_USER_INFO:
             return Object.assign({}, state, { user: action.payload });
             
         case CLEAR_USER_SESSION:

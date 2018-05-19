@@ -6,13 +6,14 @@ import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
-
+//https://protected-headland-78198.herokuapp.com
 class Favorites extends Component {
 
     componentDidMount() {
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+        if (this.props.user.hasOwnProperty('displayName')) {
+            axios.get('http://localhost:3020/api/getFavorites/' + this.props.user.user_id)
                 .then(response => {
+                    console.log('response', response)
                     this.props.getFavorites(response.data)
                 })
         }
@@ -25,14 +26,17 @@ class Favorites extends Component {
 
     deleteFavoriteTab(user_id, tab_id) {
         const favData = { user_id: user_id, tab_id: tab_id }
-        axios.post('https://protected-headland-78198.herokuapp.com/api/deleteFavorite', favData)
+        console.log('favData', favData);
+        axios.post('http://localhost:3020/api/deleteFavorite', favData)
             .then(response => {
                 this.props.getFavorites(response.data);
             })
     }
 
     render() {
+        console.log('userFav',this.props.userFavorites)
         let favoritesList = this.props.userFavorites.map((favorites, i) => {
+            {{console.log(favorites)}}
             return <div className='tab_content' key={i}>
 
                 <section>
@@ -46,10 +50,10 @@ class Favorites extends Component {
                 </section>
 
                 <section>
-                    <h1>{favorites.tab_type}</h1>
+                    <h1>{favorites.type}</h1>
                 </section>
 
-                <section className='fav_difficulty'>
+                {/* <section className='fav_difficulty'>
                     {
                         favorites.difficulty.includes('undefined')
                             ?
@@ -58,10 +62,10 @@ class Favorites extends Component {
                             <h1 style={{ marginLeft: '2vw' }}>{favorites.difficulty}</h1>
                     }
 
-                </section>
+                </section> */}
 
                 <div className='delete_favorites'>
-                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.deleteFavoriteTab(this.props.user.user_id, favorites.tab_id)}></i>
+                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.deleteFavoriteTab(this.props.user.user_id, favorites.url)}></i>
                 </div>
 
             </div>
@@ -71,15 +75,15 @@ class Favorites extends Component {
 
                 <div className='search_nav_container'>
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
-                            <a href='/'>TabSlam</a>
+                            <a href='/home'>TabSlam</a>
                             :
-                            <a href='/'>TabSlam</a>
+                            <a href='/home'>TabSlam</a>
                     }
 
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
                             :
@@ -92,7 +96,7 @@ class Favorites extends Component {
                     <div className='search_container_header'>
                         <section className='search_header_buttons'>
 
-                            <Link to='/'>
+                            <Link to='/home'>
                                 <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()}/>
                             </Link>
 
@@ -116,9 +120,9 @@ class Favorites extends Component {
                                 <h1>Tab Type</h1>
                             </section>
 
-                            <section>
+                            {/* <section>
                                 <h1>Difficulty</h1>
-                            </section>
+                            </section> */}
 
                         </section>
                     </div>
