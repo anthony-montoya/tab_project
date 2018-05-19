@@ -37,19 +37,21 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        this.props.getUserInfo();
+        // this.props.getUserInfo();
         axios.get('/auth/me').then(res => {
+            console.log('res', res)
             if (res.data !== 'User not found') {
                 this.props.getUserInfo(res.data)
-                axios.get('https://tab-slam-server.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
-                .then(response => {
-                    this.props.getFavorites(response.data)
-                })
+                // axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+                // .then(response => {
+                //     this.props.getFavorites(response.data)
+                // })
             }
         })
     }
 
     render() {
+        console.log('PROPS', this.props)
         if (this.props.user.hasOwnProperty('displayName')) {
             this.props.updateHeader(this.props.user.displayName);
         }
