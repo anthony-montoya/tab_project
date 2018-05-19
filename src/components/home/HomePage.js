@@ -45,6 +45,7 @@ class HomePage extends Component {
     }
 
     render() {
+        console.log(this.props.user)
         if (this.props.user.hasOwnProperty('displayName')) {
             this.props.updateHeader(this.props.user.displayName);
         }
