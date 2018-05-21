@@ -65,11 +65,11 @@ class Favorites extends Component {
                     {
                         this.props.user.hasOwnProperty('displayName')
                             ?
-                            <Link to={process.env.NODE_ENV}>
+                            <Link to='/home'>
                                 <h1>TabSlam</h1>
                             </Link>
                             :
-                            <a href={process.env.NODE_ENV}>TabSlam</a>
+                            <a href='/home'>TabSlam</a>
                     }
 
                     {
