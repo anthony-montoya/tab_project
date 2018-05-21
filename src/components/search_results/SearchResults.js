@@ -42,6 +42,15 @@ class SearchResults extends Component {
     }
 
     render() {
+        let tabID = this.props.tabObject.url
+        let isFavorite = false;
+
+        for (var i = 0; i < this.props.userFavorites.length; i++) {
+            if (this.props.userFavorites[i].url === tabID) {
+                isFavorite = true;
+                break;
+            }
+        }
         let filteredTabList = this.props.tabList.map((tab, i) => {
             return <div className='tab_content' key={i}>
 
