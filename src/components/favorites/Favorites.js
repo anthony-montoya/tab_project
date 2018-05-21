@@ -86,7 +86,7 @@ class Favorites extends Component {
                     <div className='search_container_header'>
                         <section className='search_header_buttons'>
 
-                            <Link to={process.env.NODE_ENV}>
+                            <Link to='/home'>
                                 <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
                             </Link>
 
