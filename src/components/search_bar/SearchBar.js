@@ -5,7 +5,7 @@ import { getFavorites, updateTabList, updateUserSearch } from '../../ducks/reduc
 import axios from 'axios';
 import './SearchBar.css';
 
-const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/home' : 'http://localhost:3020'
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
 
 class SearchBar extends Component {
     constructor() {

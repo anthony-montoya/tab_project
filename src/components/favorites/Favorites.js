@@ -7,7 +7,7 @@ import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
-const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/home' : 'http://localhost:3020'
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
 
 class Favorites extends Component {
 

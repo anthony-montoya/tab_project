@@ -4,7 +4,7 @@ import { setUserInfo } from '../../ducks/reducer';
 import axios from 'axios';
 import './Login.css';
 
-const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/' : 'http://localhost:3020'
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
 
 class Login extends Component {
     constructor() {
