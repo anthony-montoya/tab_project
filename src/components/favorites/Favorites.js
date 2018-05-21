@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getTabObject, setFavoritesStatus, getFavorites, clearResults } from '../../ducks/reducer';
+import AppLogin from '../login/AppLogin';
 import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
 
 class Favorites extends Component {
 
     componentDidMount() {
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+        if (this.props.user.hasOwnProperty('displayName')) {
+            axios.get(`${serverURL}/api/getFavorites/${this.props.user.auth_id}`)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -23,9 +25,10 @@ class Favorites extends Component {
         this.props.setFavoritesStatus(true);
     }
 
-    deleteFavoriteTab(user_id, tab_id) {
-        const favData = { user_id: user_id, tab_id: tab_id }
-        axios.post('https://protected-headland-78198.herokuapp.com/api/deleteFavorite', favData)
+    deleteFavoriteTab(auth_id, tab_id) {
+        alert('Hit OK to remove this tab from your favorites.')
+        const favData = { auth_id: auth_id, tab_id: tab_id }
+        axios.post('http://localhost:3020/api/deleteFavorite', favData)
             .then(response => {
                 this.props.getFavorites(response.data);
             })
@@ -46,22 +49,11 @@ class Favorites extends Component {
                 </section>
 
                 <section>
-                    <h1>{favorites.tab_type}</h1>
-                </section>
-
-                <section className='fav_difficulty'>
-                    {
-                        favorites.difficulty.includes('undefined')
-                            ?
-                            <h1 style={{ marginLeft: '2vw' }}>-----</h1>
-                            :
-                            <h1 style={{ marginLeft: '2vw' }}>{favorites.difficulty}</h1>
-                    }
-
+                    <h1>{favorites.type}</h1>
                 </section>
 
                 <div className='delete_favorites'>
-                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.deleteFavoriteTab(this.props.user.user_id, favorites.tab_id)}></i>
+                    <i className="fa fa-times" aria-hidden="true" onClick={() => this.deleteFavoriteTab(this.props.user.auth_id, favorites.url)}></i>
                 </div>
 
             </div>
@@ -71,19 +63,21 @@ class Favorites extends Component {
 
                 <div className='search_nav_container'>
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
-                            <a href='/'>TabSlam</a>
+                            <Link to='/home'>
+                                <h1>TabSlam</h1>
+                            </Link>
                             :
-                            <a href='/'>TabSlam</a>
+                            <a href='http://localhost:3000/home'>TabSlam</a>
                     }
 
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
                             :
-                            <a href={process.env.REACT_APP_LOGIN}>Login</a>
+                            <AppLogin />
                     }
 
                 </div>
@@ -92,8 +86,8 @@ class Favorites extends Component {
                     <div className='search_container_header'>
                         <section className='search_header_buttons'>
 
-                            <Link to='/'>
-                                <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()}/>
+                            <Link to='/home'>
+                                <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
                             </Link>
 
                             <section className='search_container_resultText'>
@@ -114,10 +108,6 @@ class Favorites extends Component {
 
                             <section>
                                 <h1>Tab Type</h1>
-                            </section>
-
-                            <section>
-                                <h1>Difficulty</h1>
                             </section>
 
                         </section>

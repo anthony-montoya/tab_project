@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader, getFavorites } from '../../ducks/reducer';
+import { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, updateHeader, getFavorites } from '../../ducks/reducer';
 import axios from 'axios';
+import Login from '../login/Login';
 import './Home.css';
+
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
 
 class HomePage extends Component {
     constructor() {
@@ -13,13 +16,14 @@ class HomePage extends Component {
             band: '',
             song: '',
             searchCategory: '',
+            displayName: ''
         }
         this.getTabsByBand = this.getTabsByBand.bind(this);
         this.getTabsBySong = this.getTabsBySong.bind(this);
     }
 
     getTabsByBand(band) {
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/bandSearch/${this.state.band}`)
+        axios.get(`${serverURL}/api/bandSearch/${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -28,7 +32,7 @@ class HomePage extends Component {
     }
 
     getTabsBySong(song) {
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/songSearch/${this.state.song}`)
+        axios.get(`${serverURL}/api/songSearch/${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.setLoadingStatus(false);
@@ -36,22 +40,8 @@ class HomePage extends Component {
             })
     }
 
-    componentDidMount() {
-        this.props.getUserInfo();
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
-                .then(response => {
-                    this.props.getFavorites(response.data)
-                })
-        }
-    }
 
     render() {
-
-        if (this.props.user.hasOwnProperty('username')) {
-            this.props.updateHeader(this.props.user.username);
-        }
-
         return (
             <div className='home_page_container'>
                 <div className='fullscreen-bg'>
@@ -61,7 +51,13 @@ class HomePage extends Component {
                 </div>
 
                 <div className='home_hero_container'>
-                    <h1>{this.props.menuHeaderText}</h1>
+                    {
+                        this.props.user.displayName
+                            ?
+                            <h1>Welcome Back, {this.props.user.displayName}</h1>
+                            :
+                            <h1>Learning music has never been easier</h1>
+                    }
                     <h4>Search below by song or artist to begin learning your favorite music.</h4>
                 </div>
 
@@ -90,14 +86,14 @@ class HomePage extends Component {
                 <section className='home_login_container'>
                     <hr />
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <div className='loggedInButtons'>
                                 <Link to='/my-favorites' className='home_login_button'>My Favorites</Link>
                                 <a href={process.env.REACT_APP_LOGOUT} className='home_login_button'>Logout</a>
                             </div>
                             :
-                            <a href={process.env.REACT_APP_LOGIN} className='home_login_button'>Login to TabSlam</a>
+                            <Login setUserInfo={this.props.setUserInfo} isLoggedIn={this.props.user.hasOwnProperty('username')} />
                     }
                 </section>
 
@@ -110,4 +106,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, getUserInfo, updateHeader, getFavorites })(HomePage);
+export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, updateHeader, getFavorites })(HomePage);

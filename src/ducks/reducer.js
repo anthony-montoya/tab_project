@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const initialState = {
     tabList: [],
     tabContent: '',
@@ -21,7 +19,7 @@ const CLEAR_RESULTS = 'CLEAR_RESULTS';
 const CLEAR_TAB_CONTENT = 'CLEAR_TAB_CONTENT';
 const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
 const GET_TAB_ID = 'GET_TAB_ID';
-const GET_USER_INFO = 'GET_USER_INFO';
+const SET_USER_INFO = 'SET_USER_INFO';
 const CLEAR_USER_SESSION = 'CLEAR_USER_SESSION';
 const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
 const GET_TAB_OBJECT = 'GET_TAB_OBJECT';
@@ -66,14 +64,9 @@ export function getTabId(tabId) {
     }
 }
 
-export function getUserInfo() {
-    let userInfo = axios.get('/auth/me').then(res => {
-        if (res.data !== 'User not found') {
-            return res.data;
-        }
-    })
+export function setUserInfo(userInfo) {
     return {
-        type: GET_USER_INFO,
+        type: SET_USER_INFO,
         payload: userInfo
     }
 }
@@ -152,7 +145,7 @@ export default function reducer(state = initialState, action) {
         case GET_TAB_ID:
             return Object.assign({}, state, { tabId: action.payload });
 
-        case GET_USER_INFO + '_FULFILLED':
+        case SET_USER_INFO:
             return Object.assign({}, state, { user: action.payload });
             
         case CLEAR_USER_SESSION:

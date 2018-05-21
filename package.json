@@ -29,5 +29,5 @@
     "now-start": "node server/server.js",
     "deploy": "now --public --dotenv=.env.prod -d"
   },
-  "proxy": "http://localhost:3020"
+  "proxy": "https://tab-slam-server.herokuapp.com"
 }

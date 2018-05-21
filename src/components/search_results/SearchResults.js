@@ -4,25 +4,28 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { clearResults, renderTabResults, getTabId, getTabObject, setFavoritesStatus, getFavorites } from '../../ducks/reducer';
 import './SearchResults.css';
+import AppLogin from '../login/AppLogin';
 import LoadingScreen from '../loading/LoadingScreen';
 import backArrowLogo from '../../backArrow.png';
 import SearchBar from '../search_bar/SearchBar';
 
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
+
 class SearchResults extends Component {
     //THIS CURRENTLY HAS THE URL FOR THE TAB THE USER WANTS
     getContentText(tabObj) {
-        var tabUrl = tabObj.url;
-        var tabDifficulty = tabObj.difficulty;
+        let tabUrl = tabObj.url;
 
-        axios.get(`https://protected-headland-78198.herokuapp.com/api/tabContent?tabUrl=${tabUrl}&tabDifficulty=${tabDifficulty}`)
+        axios.get(`${serverURL}/api/tabContent?tabUrl=${tabUrl}`)
             .then((response) => {
-                if (response.data) {
+                response.data.url = tabUrl;
+                if (response.data.content) {
                     this.props.getTabObject(response.data);
-                    this.props.renderTabResults(response.data.tab_content);
+                    this.props.renderTabResults(response.data.content);
                     this.props.getTabId(response.data.tab_id);
                 }
                 else {
-                    this.props.renderTabResults(response.data[0].tab_content);
+                    this.props.renderTabResults(response.data[0].content);
                     this.props.getTabObject(response.data[0]);
                 }
             })
@@ -30,8 +33,8 @@ class SearchResults extends Component {
 
     componentDidMount() {
         this.props.setFavoritesStatus(false);
-        if (this.props.user.hasOwnProperty('username')) {
-            axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
+        if (this.props.user.hasOwnProperty('displayName')) {
+            axios.get(`${serverURL}/api/getFavorites/${this.props.user.auth_id}`)
                 .then(response => {
                     this.props.getFavorites(response.data)
                 })
@@ -40,35 +43,23 @@ class SearchResults extends Component {
 
     render() {
         let filteredTabList = this.props.tabList.map((tab, i) => {
-            if (!tab.type.includes('pro') && !tab.type.includes('official')) {
-                return <div className='tab_content' key={i}>
+            return <div className='tab_content' key={i}>
 
-                    <section className='tab_artistContainer'>
-                        <h1>{tab.artist}</h1>
-                    </section>
+                <section className='tab_artistContainer'>
+                    <h1>{tab.artist}</h1>
+                </section>
 
-                    <section className='tab_songContainer'>
-                        <Link to={{ pathname: '/tab-results', tabUrl: tab.url }}>
-                            <h1 onClick={() => this.getContentText(this.props.tabList[i])}>{tab.name}</h1>
-                        </Link>
-                    </section>
+                <section className='tab_songContainer'>
+                    <Link to={{ pathname: '/tab-results', tabUrl: tab.url }}>
+                        <h1 onClick={() => this.getContentText(this.props.tabList[i])}>{tab.name}</h1>
+                    </Link>
+                </section>
 
-                    <section className='tab_typeContainer'>
-                        <h1>{tab.type}</h1>
-                    </section>
+                <section className='tab_typeContainer'>
+                    <h1>{tab.type}</h1>
+                </section>
 
-                    {/* <section className='tab_difficultyContainer'>
-                        {
-                            tab.difficulty
-                                ?
-                                <h1>{tab.difficulty}</h1>
-                                :
-                                <h1>-----</h1>
-                        }
-                    </section> */}
-
-                </div>
-            }
+            </div>
         })
 
         return (
@@ -76,15 +67,17 @@ class SearchResults extends Component {
 
                 <div className='search_nav_container'>
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
-                            <a href='/home'>TabSlam</a>
+                            <Link to='/home'>
+                                <h1>TabSlam</h1>
+                            </Link>
                             :
-                            <a href='/home'>TabSlam</a>
+                            <a href='http://localhost:3000/home'>TabSlam</a>
                     }
 
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <div className='favorite_nav'>
                                 <Link to='/my-favorites'>
@@ -93,7 +86,7 @@ class SearchResults extends Component {
                                 <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
                             </div>
                             :
-                            <a href={process.env.REACT_APP_LOGIN}>Login</a>
+                            <AppLogin />
                     }
 
                 </div>
@@ -132,10 +125,6 @@ class SearchResults extends Component {
                                         <section>
                                             <h1>Tab Type</h1>
                                         </section>
-                                        {/* 
-                                    <section>
-                                        <h1>Difficulty</h1>
-                                    </section> */}
 
                                     </section>
                                 </div>

@@ -3,19 +3,21 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearTabContent, getTabObject, getFavorites } from '../../ducks/reducer';
+import AppLogin from '../login/AppLogin';
 import './TabResults.css';
 import backArrowLogo from '../../backArrow.png';
 
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
+
 class TabResults extends Component {
-
     add(tabId) {
-        const config = { tabId: tabId, userId: this.props.user.user_id }
+        const config = { tabId: this.props.tabObject.url, authId: this.props.user.auth_id }
 
-        axios.post('https://protected-headland-78198.herokuapp.com/api/addFavoriteTab', config).then(res => {
-            if (this.props.user.hasOwnProperty('username')) {
-                axios.get('https://protected-headland-78198.herokuapp.com/api/getFavorites/' + this.props.user.user_id)
-                    .then(response => {
-                        this.props.getFavorites(response.data)
+        axios.post('http://localhost:3020/api/addFavoriteTab', config).then(res => {
+            if (this.props.user.hasOwnProperty('displayName')) {
+                axios.get(`${serverURL}/api/getFavorites/${this.props.user.auth_id}`)
+                    .then(res => {
+                        this.props.getFavorites(res.data)
                     })
             }
             alert(res.data);
@@ -23,24 +25,19 @@ class TabResults extends Component {
     }
 
     updateFavoriteIcon(tabId) {
-        this.add(tabId);
-        if(!this.props.user.hasOwnProperty('username')) {
+        if (!this.props.user.hasOwnProperty('displayName')) {
             alert('Please log in to favorite a tab!');
+        } else {
+            this.add(tabId);
         }
     }
 
     render() {
-        let tabID;
-        let isFavorite = false
-
-        if (this.props.tabId === '') {
-            tabID = this.props.tabObject.tab_id
-        }
-        else
-            tabID = tabID = this.props.tabId
+        let tabID = this.props.tabObject.url
+        let isFavorite = false;
 
         for (var i = 0; i < this.props.userFavorites.length; i++) {
-            if (this.props.userFavorites[i].tab_id === tabID) {
+            if (this.props.userFavorites[i].url === tabID) {
                 isFavorite = true;
                 break;
             }
@@ -51,10 +48,12 @@ class TabResults extends Component {
 
                 <div className='tab_nav_container'>
 
-                    <a href='/home'>TabSlam</a>
+                    <Link to='/home'>
+                        <h1>TabSlam</h1>
+                    </Link>
 
                     {
-                        this.props.user.hasOwnProperty('username')
+                        this.props.user.hasOwnProperty('displayName')
                             ?
                             <div className='favorite_nav'>
                                 <Link to='/my-favorites'>
@@ -63,9 +62,8 @@ class TabResults extends Component {
                                 <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
                             </div>
                             :
-                            <a href={process.env.REACT_APP_LOGIN}>Login</a>
+                            <AppLogin />
                     }
-                    <a href='/home'>TabSlam</a>
 
                 </div>
 
@@ -91,33 +89,31 @@ class TabResults extends Component {
                             <h4>{'By: ' + this.props.tabObject.artist}</h4>
                         </section>
 
-                        {/* <section>
-                            {
-                                this.props.tabObject.difficulty === 'undefined'
-                                    ?
-                                    <h3>Tab Difficulty: ---</h3>
-                                    :
-                                    <h3>{'Tab Difficulty: ' + this.props.tabObject.difficulty}</h3>
-                            }
-                        </section> */}
-
                         <section>
                             {
-                                this.props.tabObject.rating
+                                this.props.tabObject.rating === 0
                                     ?
-                                    <h3>{'Tab Rating: ' + this.props.tabObject.rating + '/5'}</h3>
+                                    null
                                     :
-                                    <h3>Tab Rating: ---</h3>
+                                    <h3>{'Tab Rating: ' + this.props.tabObject.rating + '/5'}</h3>
                             }
                         </section>
 
                         <section>
                             {
-                                this.props.tabObject.tab_rates
+                                this.props.tabObject.tab_rates === 0
                                     ?
-                                    <h3>{'Tab Votes: ' + this.props.tabObject.tab_rates}</h3>
+                                    null
                                     :
-                                    <h3>Tab Votes: ---</h3>
+                                    <h3>{'Tab Votes: ' + this.props.tabObject.tab_rates}</h3>
+                            }
+                        </section>
+
+                        <section>
+                            {
+                                this.props.tabObject.difficulty
+                                &&
+                                <h3>{'Tab Difficulty: ' + this.props.tabObject.difficulty}</h3>
                             }
                         </section>
 
@@ -125,9 +121,9 @@ class TabResults extends Component {
                             {
                                 isFavorite
                                     ?
-                                    <i className="fa fa-heart fa-2x" aria-hidden="true"></i>
+                                    <i className="fa fa-heart fa-2x" aria-hidden="false"></i>
                                     :
-                                    <i onClick={() => this.updateFavoriteIcon(this.props.tabObject.tab_id)} className="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                                    <i onClick={(event) => { this.updateFavoriteIcon(this.props.tabObject.url) }} className="fa fa-heart-o fa-2x" aria-hidden="true"></i>
                             }
 
                         </section>
@@ -138,6 +134,10 @@ class TabResults extends Component {
                         <pre>
                             {
                                 this.props.tabObject.content
+                                    ?
+                                    this.props.tabObject.content
+                                    :
+                                    this.props.tabContent
                             }
                         </pre>
                     </div>
