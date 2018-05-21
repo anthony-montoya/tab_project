@@ -73,7 +73,7 @@ class SearchResults extends Component {
                                 <h1>TabSlam</h1>
                             </Link>
                             :
-                            <a href='http://localhost:3000/home'>TabSlam</a>
+                            <a href={process.env.NODE_ENV}>TabSlam</a>
                     }
 
                     {

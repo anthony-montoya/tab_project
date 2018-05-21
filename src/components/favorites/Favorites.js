@@ -7,7 +7,7 @@ import axios from 'axios';
 import './Favorites.css';
 import backArrowLogo from '../../backArrow.png';
 
-const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com' : 'http://localhost:3020'
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/home' : 'http://localhost:3020'
 
 class Favorites extends Component {
 
@@ -28,7 +28,7 @@ class Favorites extends Component {
     deleteFavoriteTab(auth_id, tab_id) {
         alert('Hit OK to remove this tab from your favorites.')
         const favData = { auth_id: auth_id, tab_id: tab_id }
-        axios.post('http://localhost:3020/api/deleteFavorite', favData)
+        axios.post(`${serverURL}/api/deleteFavorite`, favData)
             .then(response => {
                 this.props.getFavorites(response.data);
             })
@@ -65,11 +65,11 @@ class Favorites extends Component {
                     {
                         this.props.user.hasOwnProperty('displayName')
                             ?
-                            <Link to='/home'>
+                            <Link to={process.env.NODE_ENV}>
                                 <h1>TabSlam</h1>
                             </Link>
                             :
-                            <a href='http://localhost:3000/home'>TabSlam</a>
+                            <a href={process.env.NODE_ENV}>TabSlam</a>
                     }
 
                     {
@@ -86,7 +86,7 @@ class Favorites extends Component {
                     <div className='search_container_header'>
                         <section className='search_header_buttons'>
 
-                            <Link to='/home'>
+                            <Link to={process.env.NODE_ENV}>
                                 <img src={backArrowLogo} alt='' onClick={() => this.props.clearResults()} />
                             </Link>
 

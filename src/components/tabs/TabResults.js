@@ -13,7 +13,7 @@ class TabResults extends Component {
     add(tabId) {
         const config = { tabId: this.props.tabObject.url, authId: this.props.user.auth_id }
 
-        axios.post('http://localhost:3020/api/addFavoriteTab', config).then(res => {
+        axios.post(`${serverURL}/api/addFavoriteTab`, config).then(res => {
             if (this.props.user.hasOwnProperty('displayName')) {
                 axios.get(`${serverURL}/api/getFavorites/${this.props.user.auth_id}`)
                     .then(res => {

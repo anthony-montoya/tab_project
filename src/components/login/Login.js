@@ -4,6 +4,8 @@ import { setUserInfo } from '../../ducks/reducer';
 import axios from 'axios';
 import './Login.css';
 
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/home' : 'http://localhost:3020'
+
 class Login extends Component {
     constructor() {
         super();
@@ -17,7 +19,7 @@ class Login extends Component {
     }
 
     handleLogin = () => {
-        axios.get(`http://localhost:3020/api/login/${this.state.username}/${this.state.password}`).then(response => {
+        axios.get(`${serverURL}/api/login/${this.state.username}/${this.state.password}`).then(response => {
             this.setState({
                 username: response.data[0].username,
                 auth_id: response.data[0].auth_id

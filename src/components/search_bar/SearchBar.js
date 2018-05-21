@@ -5,6 +5,8 @@ import { getFavorites, updateTabList, updateUserSearch } from '../../ducks/reduc
 import axios from 'axios';
 import './SearchBar.css';
 
+const serverURL = process.env.NODE_ENV === 'production' ? 'https://tab-slam-server.herokuapp.com/home' : 'http://localhost:3020'
+
 class SearchBar extends Component {
     constructor() {
         super();
@@ -19,7 +21,7 @@ class SearchBar extends Component {
     }
 
     getTabsByBand(band) {
-        axios.get(`https://tab-slam-server.herokuapp.com/api/bandSearch/${this.state.band}`)
+        axios.get(`${serverURL}/api/bandSearch/${this.state.band}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.updateUserSearch(this.state.band)
@@ -27,7 +29,7 @@ class SearchBar extends Component {
     }
 
     getTabsBySong(song) {
-        axios.get(`https://tab-slam-server.herokuapp.com/api/songSearch/${this.state.song}`)
+        axios.get(`${serverURL}/api/songSearch/${this.state.song}`)
             .then((response) => {
                 this.props.updateTabList(response.data);
                 this.props.updateUserSearch(this.state.song);
