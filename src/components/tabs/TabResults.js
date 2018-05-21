@@ -33,6 +33,16 @@ class TabResults extends Component {
     }
 
     render() {
+        let tabID = this.props.tabObject.url
+        let isFavorite = false;
+
+        for (var i = 0; i < this.props.userFavorites.length; i++) {
+            if (this.props.userFavorites[i].url === tabID) {
+                isFavorite = true;
+                break;
+            }
+        }
+
         return (
             <div className='tab_page_container'>
 
