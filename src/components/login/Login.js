@@ -20,19 +20,22 @@ class Login extends Component {
 
     handleLogin = () => {
         axios.get(`${serverURL}/api/login/${this.state.username}/${this.state.password}`).then(response => {
-            if (response.status === 200) {
-                this.setState({
-                    username: response.data[0].username,
-                    auth_id: response.data[0].auth_id
-                })
+            if (!response.data.newUser){
                 let user = {
-                    displayName: this.state.username,
-                    auth_id: this.state.auth_id
+                    displayName: response.data[0].username,
+                    auth_id: response.data[0].auth_id
                 }
                 this.props.setUserInfo(user)
-            } else if (response.status === 404) {
-                alert('Credentials are invalid, please try again!')
+            } else {
+                alert(response.data.alert)
+                let user = {
+                    displayName: response.data.newUser[0].username,
+                    auth_id: response.data.newUser[0].auth_id
+                }
+                this.props.setUserInfo(user)
             }
+        }).catch((err) => {
+            alert(err.response.data);
         })
     }
 

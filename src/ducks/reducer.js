@@ -100,13 +100,6 @@ export function updateUserSearch(search) {
 
 }
 
-export function updateHeader(username) {
-    return {
-        type: UPDATE_MENU_HEADER_TEXT,
-        payload: 'Welcome Back, ' + username
-    }
-}
-
 export function setFavoritesStatus(status) {
     return {
         type: SET_FAVORITES_STATUS,

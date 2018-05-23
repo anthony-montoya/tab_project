@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, updateHeader, getFavorites } from '../../ducks/reducer';
+import { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, getFavorites } from '../../ducks/reducer';
 import axios from 'axios';
 import Login from '../login/Login';
 import './Home.css';
@@ -54,7 +54,7 @@ class HomePage extends Component {
                     {
                         this.props.user.displayName
                             ?
-                            <h1>Welcome Back, {this.props.user.displayName}</h1>
+                            <h1>Hello, {this.props.user.displayName}</h1>
                             :
                             <h1>Learning music has never been easier</h1>
                     }
@@ -106,4 +106,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, updateHeader, getFavorites })(HomePage);
+export default connect(mapStateToProps, { updateTabList, setLoadingStatus, updateUserSearch, setUserInfo, getFavorites })(HomePage);
